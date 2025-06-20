@@ -1,5 +1,10 @@
 title: Site
-
 sections:
+  rooms:
+    layout: list
+    type: pages
+    parent: kirby.page("rooms")
+    template:
+          - room
   pages:
     type: pages

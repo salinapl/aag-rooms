@@ -1,0 +1,18 @@
+h1 {
+    padding: 5px;
+    font: bold 2em "Open Sans", sans-serif;
+}
+ul.schedule {
+    padding:5px;
+    list-style: none;
+}
+.schedule > li {
+    padding:5px;
+    border-radius:5px
+}
+.schedule > li:nth-child(odd) {
+    background-color: #aaa
+}
+.time {
+    font: bold 1.2em "Open Sans", sans-serif
+}

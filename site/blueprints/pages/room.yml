@@ -1,0 +1,17 @@
+title: Meeting Room
+columns:
+  main:
+    width: 2/3
+    fields:
+      rmnum:
+        label: Library Calendar Room Number
+        type: number
+  sidebar:
+    width: 1/3
+    fields:
+      qr_image:
+        type: files
+        query: page.images
+        multiple: false
+        label: Room QR Code
+
