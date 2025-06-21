@@ -6,6 +6,9 @@ columns:
       rmnum:
         label: Library Calendar Room Number
         type: number
+      authurl:
+        label: Calendar API URL
+        type: text
   sidebar:
     width: 1/3
     fields:

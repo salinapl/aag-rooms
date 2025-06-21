@@ -2,11 +2,15 @@ Title: McKenzie Room 1
 
 ----
 
-Rmnum: 147
+Rmnum: 90
 
 ----
 
-Qr-image: 
+Authurl: https://calendar.salinapubliclibrary.org/oauth/token
+
+----
+
+Qr-image: - file://MCyvMvvFN50rlmVP
 
 ----
 

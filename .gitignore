@@ -55,3 +55,6 @@ index.php
 # ---------------
 
 /site/config/.license
+/site/plugins/kirby3-dotenv-5.0.0
+.env
+.env.localhost

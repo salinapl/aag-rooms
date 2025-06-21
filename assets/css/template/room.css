@@ -1,18 +1,43 @@
+body {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 5px;
+
+}
+svg {
+    max-width:250px;
+}
 h1 {
-    padding: 5px;
-    font: bold 2em "Open Sans", sans-serif;
+    padding: 0 0 5px 0;
+    font: bold 3em "Open Sans", sans-serif;
+    flex: 3 3;
+    min-width: 100%;
 }
 ul.schedule {
-    padding:5px;
+    padding:0;
     list-style: none;
+    flex: 2 1;
+    max-width:66%;
 }
 .schedule > li {
-    padding:5px;
-    border-radius:5px
+    padding: 5px;
+    border-radius: 5px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-wrap: nowrap;
+    text-overflow: ellipsis;
+
 }
 .schedule > li:nth-child(odd) {
-    background-color: #aaa
+    background-color: #aaa;
 }
 .time {
-    font: bold 1.2em "Open Sans", sans-serif
+    font: bold 1.2em "Open Sans", sans-serif;
+}
+.sidebar {
+    flex: 1 1;
+}
+.sidebar > img {
+    width: 200px;
 }
