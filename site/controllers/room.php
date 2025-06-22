@@ -69,6 +69,60 @@ return function($page) {
 
     }
     // End Auth0 contributed code
+
+    // Function to lump together ending times to provide correct
+    // availiablity end times for the relative time function
+    function lumpyTime() {
+        
+    }
+    
+
+    // Function to determine relative time to the next event 
+    // in relation to the current day and closing time
+    function relativetime($time, $closingTime) {
+
+        // Check if input is a valid timestamp and convert it
+        if(!ctype_digit($time)) {
+            $time = strtotime($time);
+        }
+        if(!ctype_digit($closingTime)) {
+            $closingTime = strtotime($closingTime);
+        }
+
+        $now = time();
+
+        // If the next event time is greater than closing time, use closing time
+        if ($time > $closingTime) {
+            $time = $closingTime;
+        } 
+        
+
+        // Might need to rewrite this bit, checks if time is in the future
+        // returns closed message if not (huh?)
+        if ($time - (15 * 60) <= $now) {
+            return "for the rest of the day.";
+        }
+
+        $interval = $time - $now;
+
+        $totalTime = floor($interval / 60);
+
+        if ($totalTime < 60) {
+            return "For the next " . $totalTime . "minute" . ($totalTime !== 1 ? "s" : ".");
+        }
+
+        if($totalTime < 720) {
+            $hours = floor($totalTime / 60);
+            $minutes = $totalTime % 60;
+            $timeString = "for the next " . $hours . " hour" . ($hours !== 1 ? "s" : ".");
+            if ($minutes > 0) {
+                $timeString .= " and " . $minutes . " minute" . ($minutes !== 1 ? "s" : ".");
+            }
+            return $timeString;
+        }
+        return "all day.";
+    }
+    
     $json_raw = json_decode($json_full);
     // Filter out cancelled events from the array
     $json_filter = array_filter($json_raw, function(stdClass $item) {
@@ -89,18 +143,12 @@ return function($page) {
         $json_first = "empty";
     } else {
         $json_next_start = $json_first->start_date;
+        $nextEvent = relativetime($json_next_start, "2025-06-21 20:00:00");
     }
     
-    // echo $json_next_start;
-    // foreach ($json_ready as $json_data){
-    //    $start_time = strtotime($json_data->start_date);
-    //    $end_time = strtotime($json_data->end_date);
-    //    echo "<li><span class='time'>", date("g:ia", $start_time) ."&nbsp;-&nbsp;", date("g:ia", $end_time) ."</span>&nbsp;", $json_data->title ."</li>";
-    //}
-
     return [
         'json_ready' => $json_ready,
-        'json_next_start' => $json_next_start
+        'nextEvent' => $nextEvent
     ];
 };
 

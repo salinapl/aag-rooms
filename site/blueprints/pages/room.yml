@@ -3,6 +3,14 @@ columns:
   main:
     width: 2/3
     fields:
+      noticetoggle:
+        label: Page notice toggle
+        type: toggle
+      notice:
+        type: text
+        maxlength: 96
+        when:
+          noticetoggle: true
       rmnum:
         label: Library Calendar Room Number
         type: number
@@ -12,6 +20,12 @@ columns:
   sidebar:
     width: 1/3
     fields:
+      pgcolor:
+        label: Monochrome / Color
+        type: toggle
+        text:
+          - "monochrome"
+          - "color"
       qr_image:
         type: files
         query: page.images

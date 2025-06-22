@@ -2,11 +2,23 @@ Title: McKenzie Room 1
 
 ----
 
+Noticetoggle: false
+
+----
+
+Notice: This is an example notice testing a ton of text here I wonder if I can put in a character limit?
+
+----
+
 Rmnum: 90
 
 ----
 
 Authurl: https://calendar.salinapubliclibrary.org/oauth/token
+
+----
+
+Pgcolor: false
 
 ----
 
