@@ -89,13 +89,12 @@ return function($page) {
             $closingTime = strtotime($closingTime);
         }
 
-        $now = time();
-
         // If the next event time is greater than closing time, use closing time
         if ($time > $closingTime) {
             $time = $closingTime;
         } 
         
+        $now = time();
 
         // Might need to rewrite this bit, checks if time is in the future
         // returns closed message if not (huh?)
@@ -108,7 +107,7 @@ return function($page) {
         $totalTime = floor($interval / 60);
 
         if ($totalTime < 60) {
-            return "For the next " . $totalTime . "minute" . ($totalTime !== 1 ? "s" : ".");
+            return "For the next " . $totalTime . " minute" . ($totalTime !== 1 ? "s" : ".");
         }
 
         if($totalTime < 720) {
@@ -143,7 +142,7 @@ return function($page) {
         $json_first = "empty";
     } else {
         $json_next_start = $json_first->start_date;
-        $nextEvent = relativetime($json_next_start, "2025-06-21 20:00:00");
+        $nextEvent = relativetime($json_next_start, "2025-06-22 20:00:00");
     }
     
     return [

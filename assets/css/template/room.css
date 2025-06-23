@@ -1,5 +1,5 @@
+html, body { height:100%; }
 body {
-    padding: 5px;
     font: normal 1.5em "Open Sans", sans-serif;
     width:100%;
     display:flex;
@@ -10,26 +10,30 @@ body {
     max-width:66.6%;
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     align-content:space-around;
-    flex: 2 1
+    flex: 2 1;
+    max-height:480px;
 }
 h1 {
-    padding: 0 0 5px 0;
+    padding: 0 0 5px 5px;
     font-size:2em;
-    flex: 3 3;
+    flex: 1 0;
     width:100%;
 }
 .notice{
     text-align: center;
+    margin:5px;
     width:100%;
     border: #000 3px dotted;
 }
 ul.schedule {
     padding:0;
+    margin:5px;
     width:100%;
     list-style: none;
-    flex: 2 1;
+    flex: 1 auto;
+    height:360px;
 }
 .schedule > li {
     padding: 5px;
@@ -62,4 +66,38 @@ h1, .time, .sidebar > p{
     width: 100%;
     flex:1 1;
     align-self: flex-end;
+}
+.timeline {
+    display: flex;
+    position: relative;
+    flex: 1 auto;
+}
+.time-labels {
+    width: 103px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-right: 5px;
+}
+.time-labels div {
+    height: 60px;
+    line-height: 60px;
+}
+.events-column {
+    position: relative;
+    width: 300px;
+    /* Changes height based on the time span, currently set at 3 hours (7 times 60px) */
+    height: 7 * 60px;
+    border-left: 3px solid #000;
+    margin-bottom: 20px;
+}
+.event {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    border: 3px solid #000;
+    padding: 6px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    font-size: 0.9em;
 }
