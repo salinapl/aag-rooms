@@ -14,7 +14,7 @@
             <?php if(empty($json_ready)):  ?>
                 <p> The room is available all day today</p>
             <?php else: ?>
-                <?php snippet ('timeline') ?>    
+                <?php snippet ('schedule') ?>    
             <?php endif ?>
         </div>
         <div class="sidebar">

@@ -7,10 +7,10 @@
         <li>
             <span class="time">
                 <?php echo date("g:ia", $start_time) ?>
-                &nbsp;-&nbsp;
+                -
                 <?php echo date("g:ia", $end_time) ?>
             </span>
-            &nbsp;
+
             <?php echo $json_data->title ?>
         </li>
     <?php endforeach ?>

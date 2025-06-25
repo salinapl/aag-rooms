@@ -10,11 +10,11 @@ Notice: This is an example notice testing a ton of text here I wonder if I can p
 
 ----
 
-Rmnum: 90
+Orclosetoggle: true
 
 ----
 
-Authurl: https://calendar.salinapubliclibrary.org/oauth/token
+Orclosing: 20:00:00
 
 ----
 
@@ -26,7 +26,15 @@ Qr-image: - file://MCyvMvvFN50rlmVP
 
 ----
 
-Text: 
+Feedurl: https://calendar.salinapubliclibrary.org/events/feed/json?
+
+----
+
+Authurl: https://calendar.salinapubliclibrary.org/oauth/token
+
+----
+
+Feedflags: &start=now&quantity=10&rooms[90]=90
 
 ----
 

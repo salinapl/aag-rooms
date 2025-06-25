@@ -4,19 +4,36 @@ columns:
     width: 2/3
     fields:
       noticetoggle:
-        label: Page notice toggle
+        width: 1/4
+        label: Page Notice Toggle
         type: toggle
       notice:
+        width: 3/4
         type: text
         maxlength: 96
         when:
           noticetoggle: true
-      rmnum:
-        label: Library Calendar Room Number
-        type: number
-      authurl:
-        label: Calendar API URL
-        type: text
+      emptynotice:
+        width: 3/4
+        type: gap
+        when:
+          noticetoggle: false
+      orclosetoggle:
+        width: 1/4
+        label: Closing Time Override
+        type: toggle
+      orclosing:
+        width: 3/4
+        label: Closing Time Override
+        type: time
+        display: h:mm a
+        when:
+          orclosetoggle: true
+      emptyclosing:
+        width: 3/4
+        type: gap
+        when:
+          orclosetoggle: false
   sidebar:
     width: 1/3
     fields:
@@ -31,4 +48,24 @@ columns:
         query: page.images
         multiple: false
         label: Room QR Code
-
+  footer:
+    width: 4/4
+    fields:
+      line:
+        type: line
+      pgsettings:
+        label: Important Settings
+        type: info
+        text: |
+          The following settings are just for inital configuration, don't change them unless something is broken.   
+      feedurl:
+        width: 1/2
+        label: Calendar Feed URL
+        type: url
+      feedflags:
+        width: 1/2
+        label: Library Calendar Feed Flags
+        type: text
+      authurl:
+        label: Calendar API URL
+        type: url

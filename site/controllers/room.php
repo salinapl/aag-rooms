@@ -2,10 +2,13 @@
 
 return function($page) {
     date_default_timezone_set('America/Chicago');
-    $roomnum = $page->rmnum();
+    // $roomnum = $page->rmnum();
     $auth_url = $page->authurl();
     //$json_url = "https://calendar.salinapubliclibrary.org/events/feed/json?&start=now&end=+12hours&rooms[$roomnum]=$roomnum";
-    $json_url = "https://calendar.salinapubliclibrary.org/events/feed/json?&start=now&quantity=10&rooms[$roomnum]=$roomnum";
+    //$json_url = "https://calendar.salinapubliclibrary.org/events/feed/json?&start=now&quantity=10&rooms[$roomnum]=$roomnum";
+    $feedUrl = $page->feedurl();
+    $feedFlags = $page->feedflags();
+    $json_url = $feedUrl . $feedFlags;
     $lc_id = env('LC_API_ID');
     $lc_secret = env('LC_API_SECRET');
     $lc_user =  env('LC_API_USER');
@@ -58,7 +61,7 @@ return function($page) {
     ],
     ]);
 
-    $json_full = curl_exec($curl);
+    $jsonFull = curl_exec($curl);
     $err = curl_error($curl);
 
     curl_close($curl);
@@ -69,6 +72,10 @@ return function($page) {
 
     }
     // End Auth0 contributed code
+
+    function rebuildArray() {
+        
+    }
 
     // Function to lump together ending times to provide correct
     // availiablity end times for the relative time function
@@ -122,27 +129,28 @@ return function($page) {
         return "all day.";
     }
     
-    $json_raw = json_decode($json_full);
+    $jsonRaw = json_decode($jsonFull);
     // Filter out cancelled events from the array
-    $json_filter = array_filter($json_raw, function(stdClass $item) {
+    $jsonFilter = array_filter($jsonRaw, function(stdClass $item) {
         return !property_exists($item, 'moderation_state')
             || $item->moderation_state !== 'cancelled';
     });
     // Rename Private event titles
-    foreach ($json_filter as $item) {
+    foreach ($jsonFilter as $item) {
         if (isset($item->public) && ($item->public === false || $item->public === 'false')) {
-            $item->title = 'Private Reservation';
+            $eventid = $item->id;
+            $item->title = 'Private Reservation ('. $eventid .')';
         }
     }
     // Reset Array Numbers after filtering
-    $json_ready = array_values($json_filter);
+    $json_ready = array_values($jsonFilter);
     $json_first = $json_ready[0] ?? null;
-    $json_next_start = "none";
+    $jsonNextStart = "none";
     if ($json_first == null){
         $json_first = "empty";
     } else {
-        $json_next_start = $json_first->start_date;
-        $nextEvent = relativetime($json_next_start, "2025-06-22 20:00:00");
+        $jsonNextStart = $json_first->start_date;
+        $nextEvent = relativetime($jsonNextStart, "2025-06-22 20:00:00");
     }
     
     return [
