@@ -1,0 +1,28 @@
+Title: Rooms
+
+columns:
+  main:
+    width: 2/3
+    fields:
+      closing:
+        label: Library Hours
+        type: structure
+        fields:
+          day:
+            label: Day
+            type: text
+          hour:
+            label: Hour
+            type: time
+            display: h:mm a
+  
+  sidebar:
+    width: 1/3
+    sections:
+      rooms:
+          layout: list
+          type: pages
+          headline: Reservable Rooms
+          parent: kirby.page("rooms")
+          template:
+            - room

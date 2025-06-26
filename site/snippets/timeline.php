@@ -18,18 +18,18 @@
         <?php endforeach; ?>
     </div>
     <div class="events-column">
-        <?php if (!empty($json_ready)): ?>
-            <?php foreach($json_ready as $json_data): ?>
+        <?php if (!empty($arrayReady)): ?>
+            <?php foreach($arrayReady as $jsonData): ?>
                 <?php 
-                    if ($json_data->end_date <= $timelineStart || $json_data->start_date >= $timelineEnd) continue;
-                    $startOffsetMin = max(0, ($json_data->start_date - $timelineStart) / 60);
-                    $durationMin = ($json_data->end_date - $json_data->start_date) / 60;
+                    if ($jsonData['end_date'] <= $timelineStart || $jsonData['start_date'] >= $timelineEnd) continue;
+                    $startOffsetMin = max(0, ($jsonData['start_date'] - $timelineStart) / 60);
+                    $durationMin = ($jsonData['end_date'] - $jsonData['start_date']) / 60;
 
                     $top = $startOffsetMin * 2;
                     $height = $durationMin * 2;
                 ?>
                 <div class="event" style="top: <?= $top ?>px; height: <?= $height ?>px;">
-                    <?= htmlspecialchars($json_data->title) ?>
+                    <?= htmlspecialchars($jsonData['title']) ?>
                 </div>
             <?php endforeach ?>
         <?php else: ?>

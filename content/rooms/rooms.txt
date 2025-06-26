@@ -1,1 +1,31 @@
+Title: Rooms
+
+----
+
+Closing:
+
+- 
+  day: Sunday
+  hour: 17:00:00
+- 
+  day: Monday
+  hour: 20:00:00
+- 
+  day: Tuesday
+  hour: 20:00:00
+- 
+  day: Wednesday
+  hour: 20:00:00
+- 
+  day: Thursday
+  hour: 20:00:00
+- 
+  day: Friday
+  hour: 18:00:00
+- 
+  day: Saturday
+  hour: 17:00:00
+
+----
+
 Uuid: rcVKRvuBEEASQieN

@@ -30,11 +30,11 @@ Feedurl: https://calendar.salinapubliclibrary.org/events/feed/json?
 
 ----
 
-Authurl: https://calendar.salinapubliclibrary.org/oauth/token
+Feedflags: &start=now&quantity=10&rooms[90]=90
 
 ----
 
-Feedflags: &start=now&quantity=10&rooms[90]=90
+Authurl: https://calendar.salinapubliclibrary.org/oauth/token
 
 ----
 

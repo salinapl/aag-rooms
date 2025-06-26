@@ -2,10 +2,7 @@
 
 return function($page) {
     date_default_timezone_set('America/Chicago');
-    // $roomnum = $page->rmnum();
     $auth_url = $page->authurl();
-    //$json_url = "https://calendar.salinapubliclibrary.org/events/feed/json?&start=now&end=+12hours&rooms[$roomnum]=$roomnum";
-    //$json_url = "https://calendar.salinapubliclibrary.org/events/feed/json?&start=now&quantity=10&rooms[$roomnum]=$roomnum";
     $feedUrl = $page->feedurl();
     $feedFlags = $page->feedflags();
     $json_url = $feedUrl . $feedFlags;
@@ -13,6 +10,7 @@ return function($page) {
     $lc_secret = env('LC_API_SECRET');
     $lc_user =  env('LC_API_USER');
     $lc_pass =  env('LC_API_PASS');
+
     // Authorization code courtesy of 'https://auth0.com/docs/get-started/authentication-and-authorization-flow/client-credentials-flow/call-your-api-using-the-client-credentials-flow'
     $curl = curl_init();
 
@@ -73,89 +71,169 @@ return function($page) {
     }
     // End Auth0 contributed code
 
-    function rebuildArray() {
+    // Decodes, cleans up, then rebuilds the json array
+    function rebuildArray($json) {
+        // List of keys to keep in the array then 
+        // flip array so keys not in array are removed
+        $keptKeys = [
+            'title', 
+            'id', 
+            'public', 
+            'setup_time', 
+            'start_date', 
+            'end_date', 
+            'teardown_time', 
+            'moderation_state'
+        ];
+        $keptKeys = array_flip($keptKeys);
+
+        // Pull in the array from the website
+        $jsonArray = json_decode($json, true);
+
+        // Filter out cancelled events from the array and reset array index
+        $jsonArray = array_values(
+            array_filter(
+                $jsonArray, 
+                fn($item) => ($item['moderation_state'] ?? null) !== 'cancelled'
+            )
+        );
+        $jsonArray = array_map(
+            fn(array $row) => array_intersect_key($row, $keptKeys),
+            $jsonArray
+        );
+
+        // Locate private events and rename them and add the event ID
+        foreach ($jsonArray as & $item) {
+            if (isset($item['public']) 
+                && ($item['public'] === false || $item['public'] === 'false')
+            ) {
+                $eventid = $item['id'];
+                $item['title'] = "Private Reservation ({$eventid})";
+            }
+        }
+        unset($item);
         
+        
+        $eventsArray = $jsonArray;
+        return $eventsArray;
     }
 
     // Function to lump together ending times to provide correct
     // availiablity end times for the relative time function
-    function lumpyTime() {
-        
-    }
-    
+    function findGap(
+        array $eventsArray,
+        int $minGap = 90 * 60,
+        DateTimeImmutable $from = null
+    ): ?array {
+        $from       = $from ?: new DateTimeImmutable();
 
-    // Function to determine relative time to the next event 
-    // in relation to the current day and closing time
-    function relativetime($time, $closingTime) {
+        // Sort a copy by raw start to get soonest‐upcoming event
+        $byStart = $eventsArray;
+        usort($byStart, fn($a, $b) =>
+            (new DateTimeImmutable($a['start_date']))
+            <=> 
+            (new DateTimeImmutable($b['start_date']))
+        );
 
-        // Check if input is a valid timestamp and convert it
-        if(!ctype_digit($time)) {
-            $time = strtotime($time);
-        }
-        if(!ctype_digit($closingTime)) {
-            $closingTime = strtotime($closingTime);
-        }
-
-        // If the next event time is greater than closing time, use closing time
-        if ($time > $closingTime) {
-            $time = $closingTime;
-        } 
-        
-        $now = time();
-
-        // Might need to rewrite this bit, checks if time is in the future
-        // returns closed message if not (huh?)
-        if ($time - (15 * 60) <= $now) {
-            return "for the rest of the day.";
-        }
-
-        $interval = $time - $now;
-
-        $totalTime = floor($interval / 60);
-
-        if ($totalTime < 60) {
-            return "For the next " . $totalTime . " minute" . ($totalTime !== 1 ? "s" : ".");
-        }
-
-        if($totalTime < 720) {
-            $hours = floor($totalTime / 60);
-            $minutes = $totalTime % 60;
-            $timeString = "for the next " . $hours . " hour" . ($hours !== 1 ? "s" : ".");
-            if ($minutes > 0) {
-                $timeString .= " and " . $minutes . " minute" . ($minutes !== 1 ? "s" : ".");
+        // find title of first event starting >= $from
+        $soonestTitle = null;
+        foreach ($byStart as $e) {
+            if (new DateTimeImmutable($e['start_date']) >= $from) {
+                $soonestTitle = $e['title'] ?? null;
+                break;
             }
-            return $timeString;
         }
-        return "all day.";
+
+        // Also compute setup/teardown–buffered status of the VERY first event
+        if (isset($byStart[0])) {
+            $first = $byStart[0];
+            $bufStart = (new DateTimeImmutable($first['start_date']))
+                            ->sub(new DateInterval('PT'.$first['setup_time'].'M'));
+            $bufEnd   = (new DateTimeImmutable($first['end_date']))
+                            ->add(new DateInterval('PT'.$first['teardown_time'].'M'));
+            $isAfterSoonestStart = $from >= $bufStart;
+            $isEventOngoing      = $from >= $bufStart && $from <= $bufEnd;
+        } else {
+            $isAfterSoonestStart = false;
+            $isEventOngoing      = false;
+        }
+
+        // Sort original events by buffered start and scan for a gap
+        usort($eventsArray, function($a, $b) {
+            $aBuf = (new DateTimeImmutable($a['start_date']))
+                        ->sub(new DateInterval('PT'.$a['setup_time'].'M'));
+            $bBuf = (new DateTimeImmutable($b['start_date']))
+                        ->sub(new DateInterval('PT'.$b['setup_time'].'M'));
+            return $aBuf <=> $bBuf;
+        });
+
+        $freeStart = null;
+        $freeEnd   = null;
+
+        // Check gap *before* first buffered event
+        if (!empty($eventsArray)) {
+            $firstBufStart = (new DateTimeImmutable($eventsArray[0]['start_date']))
+                                ->sub(new DateInterval('PT'.$eventsArray[0]['setup_time'].'M'));
+            $gap = $firstBufStart->getTimestamp() - $from->getTimestamp();
+            if ($firstBufStart > $from && $gap >= $minGap) {
+                $freeStart = $from;
+                $freeEnd   = $firstBufStart;
+            }
+        }
+
+        // If not found yet, scan between events
+        if ($freeStart === null) {
+            $currentEnd = $from;
+            foreach ($eventsArray as $e) {
+                $bS = (new DateTimeImmutable($e['start_date']))
+                        ->sub(new DateInterval('PT'.$e['setup_time'].'M'));
+                $bE = (new DateTimeImmutable($e['end_date']))
+                        ->add(new DateInterval('PT'.$e['teardown_time'].'M'));
+
+                if ($bE <= $from) {
+                    continue;
+                }
+                if ($bS > $currentEnd) {
+                    $gap = $bS->getTimestamp() - $currentEnd->getTimestamp();
+                    if ($gap >= $minGap) {
+                        $freeStart = $currentEnd;
+                        $freeEnd   = $bS;
+                        break;
+                    }
+                }
+                $currentEnd = max($currentEnd, $bE);
+            }
+        }
+
+        // Single return
+        if ($freeStart !== null) {
+            return [
+                'start_date'          => $freeStart,
+                'end_date'            => $freeEnd,
+                'isAfterSoonestStart' => $isAfterSoonestStart,
+                'isEventOngoing'      => $isEventOngoing,
+                'soonestTitle'        => $soonestTitle
+            ];
+        }
+
+        return null;
     }
     
-    $jsonRaw = json_decode($jsonFull);
-    // Filter out cancelled events from the array
-    $jsonFilter = array_filter($jsonRaw, function(stdClass $item) {
-        return !property_exists($item, 'moderation_state')
-            || $item->moderation_state !== 'cancelled';
-    });
-    // Rename Private event titles
-    foreach ($jsonFilter as $item) {
-        if (isset($item->public) && ($item->public === false || $item->public === 'false')) {
-            $eventid = $item->id;
-            $item->title = 'Private Reservation ('. $eventid .')';
-        }
-    }
-    // Reset Array Numbers after filtering
-    $json_ready = array_values($jsonFilter);
-    $json_first = $json_ready[0] ?? null;
-    $jsonNextStart = "none";
-    if ($json_first == null){
-        $json_first = "empty";
+    $arrayReady = rebuildArray($jsonFull);
+    $nextGap = findgap($arrayReady);
+    
+    // Check the variable from the function findgap to see if there is an event running
+    if ($nextGap['isEventOngoing'] === false){
+        $roomStatus = "Room is currently available, will be occupied again at " . $nextGap['end_date']->format('g:ia');
     } else {
-        $jsonNextStart = $json_first->start_date;
-        $nextEvent = relativetime($jsonNextStart, "2025-06-22 20:00:00");
+        $roomStatus = "Room is currently occupied, will be available again at " . $nextGap['start_date']->format('g:ia');
     }
     
     return [
-        'json_ready' => $json_ready,
-        'nextEvent' => $nextEvent
+        'arrayReady' => $arrayReady,
+        'roomStatus' => $roomStatus,
+        'nextGap' => $nextGap,
+        'nextEvent' => $nextGap['soonestTitle']
     ];
 };
 

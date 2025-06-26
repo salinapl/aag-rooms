@@ -64,6 +64,7 @@ h1, .time, .sidebar > p{
 }
 .sidebar > img {
     width: 100%;
+    max-width:160px;
     flex:1 1;
     align-self: flex-end;
 }

@@ -1,8 +1,8 @@
 <ul class="schedule">
-    <?php foreach($json_ready as $json_data): ?>
+    <?php foreach($arrayReady as $jsonData): ?>
         <?php
-            $start_time = strtotime($json_data->start_date);
-            $end_time = strtotime($json_data->end_date);
+            $start_time = strtotime($jsonData['start_date']);
+            $end_time = strtotime($jsonData['end_date']);
         ?>
         <li>
             <span class="time">
@@ -11,7 +11,7 @@
                 <?php echo date("g:ia", $end_time) ?>
             </span>
 
-            <?php echo $json_data->title ?>
+            <?= $jsonData['title'] ?>
         </li>
     <?php endforeach ?>
 </ul>
