@@ -1,11 +1,17 @@
 <?php
 
 return function($page) {
-    date_default_timezone_set('America/Chicago');
+    // Set the default timezone 
+    // TODO - make this a variable set in the interface
+    date_default_timezone_set('America/Chicago');    
+
+    // Pull in the rest of the page configs
     $auth_url = $page->authurl();
     $feedUrl = $page->feedurl();
     $feedFlags = $page->feedflags();
     $json_url = $feedUrl . $feedFlags;
+
+    // Pull in the oauth info from the env file
     $lc_id = env('LC_API_ID');
     $lc_secret = env('LC_API_SECRET');
     $lc_user =  env('LC_API_USER');
@@ -72,7 +78,8 @@ return function($page) {
     // End Auth0 contributed code
 
     // Decodes, cleans up, then rebuilds the json array
-    function rebuildArray($json) {
+    // Need to pull in page variables for some bits to work
+    function rebuildArray($json, $page) {
         // List of keys to keep in the array then 
         // flip array so keys not in array are removed
         $keptKeys = [
@@ -113,15 +120,63 @@ return function($page) {
         }
         unset($item);
         
+        // Pull in the parent page closing times
+        $parentPage = $page->parent();
+        $regularHours = $parentPage->hours()->yaml();
+        $orHours = $page->orhours()->yaml();
+        $closeMessage = $parentPage->closemessage();
+        $today = new DateTime();
+        
+        foreach ($orHours as $row) {
+            $specialDate = new DateTime($row['ordate']);
+            $today = new DateTime();
+            $tomorrow = (clone $today)->modify('+1 day');
+            $todayName = $today->format('l');
+            $tomorrowName = $tomorrow->format('l');
+            $indexToday = array_search($todayName, array_column($regularHours, 'day'));
+
+            if ($specialDate->format('Y-m-d') === $today->format('Y-m-d')) {
+                $closeTime = $row['orclose'];
+                $openTime = $row['oropen'];
+                $closeMessage = $row['ormessage'];
+            } elseif ($indexToday !== false) {
+                    $todayRow = $regularHours[$indexToday];
+
+                    // Handle Sat-Sun wraparound
+                    $indexNext = ($indexToday + 1) % count ($regularHours);
+                    $nextRow = $regularHours[$indexNext];
+
+                    $closeTime = $today->format('Y-m-d') . ' ' . $todayRow['close'];
+                    $openTime = $tomorrow->format('Y-m-d') . ' ' . $nextRow['open'];
+
+            } else {
+                // Random fallback times if no data
+                $closeTime = $today->format('Y-m-d') . ' ' . '23:00';
+                $openTime =  $today->format('Y-m-d') . ' ' . '08:00';
+            }
+
+        }
+
+        // Structure the closing event into an array
+        $closeArray = [
+            'title' => trim((string)$closeMessage) ?: 'Closed',
+            'setup_time' => 0,
+            'start_date' => $closeTime,
+            'end_date' => $openTime,
+            'teardown_time' => 0,
+            'moderation_state' => 'approved'
+        ];
+        // Append the closing event to the end of the array
+        $jsonArray[] = $closeArray;
         
         $eventsArray = $jsonArray;
         return $eventsArray;
     }
 
-    // Function to lump together ending times to provide correct
-    // availiablity end times for the relative time function
+    // Function to find the next gap in upcoming events greater than 90 minutes
     function findGap(
         array $eventsArray,
+        // Set to a 90 minute gap
         int $minGap = 90 * 60,
         DateTimeImmutable $from = null
     ): ?array {
@@ -205,6 +260,13 @@ return function($page) {
             }
         }
 
+        // Check if current event is last in the array
+        $isLastEvent = false;
+        if ($soonestTitle !== null && !empty($byStart)) {
+            $lastEvent = end($byStart); // Last by start_date
+            $isLastEvent = ($lastEvent['title'] ?? null) === $soonestTitle;
+        }
+
         // Single return
         if ($freeStart !== null) {
             return [
@@ -212,28 +274,38 @@ return function($page) {
                 'end_date'            => $freeEnd,
                 'isAfterSoonestStart' => $isAfterSoonestStart,
                 'isEventOngoing'      => $isEventOngoing,
-                'soonestTitle'        => $soonestTitle
+                'soonestTitle'        => $soonestTitle,
+                'isLastEvent'         => $isLastEvent
             ];
         }
 
         return null;
     }
     
-    $arrayReady = rebuildArray($jsonFull);
+    $arrayReady = rebuildArray($jsonFull, $page);
     $nextGap = findgap($arrayReady);
     
+    //TODO - Rewrite this, need it to not fire null when no upcoming events at end of the day
     // Check the variable from the function findgap to see if there is an event running
-    if ($nextGap['isEventOngoing'] === false){
-        $roomStatus = "Room is currently available, will be occupied again at " . $nextGap['end_date']->format('g:ia');
+    if ($nextGap !== null) {
+        if ($nextGap['isLastEvent'] && $nextGap['isEventOngoing']) {
+            $roomStatus = "Room is currently occupied, and will be unavailable for the rest of the day";
+        } elseif ($nextGap['isLastEvent'] && !$nextGap['isEventOngoing']) {
+            $roomStatus = "Room is currently available, We will be closing at " . $nextGap['start_date']->format('g:ia');
+        } elseif ($nextGap['isEventOngoing'] === false) {
+            $roomStatus = "Room is currently available, will be occupied again at " . $nextGap['end_date']->format('g:ia');
+        } else {
+            $roomStatus = "Room is currently occupied, will be available again at " . $nextGap['start_date']->format('g:ia');
+        }
     } else {
-        $roomStatus = "Room is currently occupied, will be available again at " . $nextGap['start_date']->format('g:ia');
+        // Fallback if no gap was found at all
+        $roomStatus = "No upcoming events or availability information could be determined.";
     }
     
     return [
         'arrayReady' => $arrayReady,
         'roomStatus' => $roomStatus,
         'nextGap' => $nextGap,
-        'nextEvent' => $nextGap['soonestTitle']
     ];
 };
 

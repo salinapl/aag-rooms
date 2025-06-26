@@ -10,11 +10,13 @@ Notice: This is an example notice testing a ton of text here I wonder if I can p
 
 ----
 
-Orclosetoggle: true
+Orhours:
 
-----
-
-Orclosing: 20:00:00
+- 
+  ordate: 2025-06-27
+  orclose: 19:00:00
+  oropen: 09:00:00
+  ormessage: test
 
 ----
 
@@ -30,7 +32,7 @@ Feedurl: https://calendar.salinapubliclibrary.org/events/feed/json?
 
 ----
 
-Feedflags: &start=now&quantity=10&rooms[90]=90
+Feedflags: &start=now&quantity=1&rooms[90]=90
 
 ----
 
@@ -39,3 +41,7 @@ Authurl: https://calendar.salinapubliclibrary.org/oauth/token
 ----
 
 Uuid: Pgh0o0i8FLWmjGca
+
+----
+
+Orhourstoggle: true

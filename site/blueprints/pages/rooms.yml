@@ -4,15 +4,25 @@ columns:
   main:
     width: 2/3
     fields:
-      closing:
-        label: Library Hours
+      closemessage:
+        label: Closing Event text
+        type: text
+        maxlength: 32
+      hours:
+        label: Regular Hours
         type: structure
         fields:
           day:
             label: Day
             type: text
-          hour:
-            label: Hour
+          open:
+            label: Opening Hour
+            mobile: true
+            type: time
+            display: h:mm a
+          close:
+            label: Closing Hour
+            mobile: true
             type: time
             display: h:mm a
   

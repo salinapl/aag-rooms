@@ -2,29 +2,40 @@ Title: Rooms
 
 ----
 
-Closing:
+Closemessage: Library Closed
+
+----
+
+Hours:
 
 - 
   day: Sunday
-  hour: 17:00:00
+  open: 12:00:00
+  close: 17:00:00
 - 
   day: Monday
-  hour: 20:00:00
+  open: 09:00:00
+  close: 20:00:00
 - 
   day: Tuesday
-  hour: 20:00:00
+  open: 09:00:00
+  close: 20:00:00
 - 
   day: Wednesday
-  hour: 20:00:00
+  open: 09:00:00
+  close: 20:00:00
 - 
   day: Thursday
-  hour: 20:00:00
+  open: 09:00:00
+  close: 20:00:00
 - 
   day: Friday
-  hour: 18:00:00
+  open: 10:00:00
+  close: 18:00:00
 - 
   day: Saturday
-  hour: 17:00:00
+  open: 10:00:00
+  close: 17:00:00
 
 ----
 
