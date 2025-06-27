@@ -203,7 +203,7 @@ return function($page) {
             return ['event'=>$e,'bufStart'=>$s,'bufEnd'=>$t];
         }, $events);
 
-        // 1) find an ongoing event
+        // find an ongoing event
         $ongoing = null;
         foreach ($bufs as $b) {
             if ($b['bufStart'] <= $now && $now <= $b['bufEnd']) {
@@ -212,10 +212,10 @@ return function($page) {
             }
         }
 
-        // 2) sort by bufStart so we can find the next future one
+        // sort by bufStart so we can find the next future one
         usort($bufs, fn($a,$b) => $a['bufStart'] <=> $b['bufStart']);
 
-        // 3) if nothing’s ongoing, find the next event-in-future
+        // if nothing’s ongoing, find the next event-in-future
         $nextEvt = null;
         if (!$ongoing) {
             foreach ($bufs as $b) {
@@ -226,10 +226,9 @@ return function($page) {
             }
         }
 
-        // 4) compute the free‐gap
-        //    if an event is ongoing → gap starts when it ends
-        //    else if next event exists → gap starts now
-        //    else → gap starts after last teardown
+        //    if an event is ongoing > gap starts when it ends
+        //    else if next event exists > gap starts now
+        //    else > gap starts after last teardown
         if ($ongoing) {
             $gapStart = $ongoing['bufEnd'];
         } elseif ($nextEvt) {
@@ -248,8 +247,7 @@ return function($page) {
             return null;
         }
 
-        // 5) is this the last event of the day?
-        //    (i.e. no event whose raw start_date > now)
+        // is this the last event of the day?
         $hasLater = false;
         foreach ($events as $e) {
             if (new DateTimeImmutable($e['start_date']) > $now) {
