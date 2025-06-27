@@ -121,40 +121,53 @@ return function($page) {
         unset($item);
         
         // Pull in the parent page closing times
-        $parentPage = $page->parent();
-        $regularHours = $parentPage->hours()->yaml();
-        $orHours = $page->orhours()->yaml();
-        $closeMessage = $parentPage->closemessage();
-        $today = new DateTime();
+        // $parentPage = $page->parent();
+        $regularHours = (array)$page->parent()->hours()->yaml();
+        $orHours = (array)$page->orhours()->yaml();
+        $closeMessage = (string)$page->parent()->closemessage();
         
-        foreach ($orHours as $row) {
-            $specialDate = new DateTime($row['ordate']);
-            $today = new DateTime();
-            $tomorrow = (clone $today)->modify('+1 day');
-            $todayName = $today->format('l');
-            $tomorrowName = $tomorrow->format('l');
-            $indexToday = array_search($todayName, array_column($regularHours, 'day'));
+        // Prep today and tommorow variables
+        $today = new DateTime();
+        $tomorrow = (clone $today)->modify('+1 day');
+        $todayName = $today->format('l');
+        $tomorrowName = $tomorrow->format('l');
+        
+        // Fallback random close times 
+        // if close time can't be set for some reason
+        $closeTime = $today->format('Y-m-d') . ' 23:00';
+        $openTime  = $today->format('Y-m-d') . ' 08:00';
 
-            if ($specialDate->format('Y-m-d') === $today->format('Y-m-d')) {
-                $closeTime = $row['orclose'];
-                $openTime = $row['oropen'];
-                $closeMessage = $row['ormessage'];
-            } elseif ($indexToday !== false) {
-                    $todayRow = $regularHours[$indexToday];
-
-                    // Handle Sat-Sun wraparound
-                    $indexNext = ($indexToday + 1) % count ($regularHours);
-                    $nextRow = $regularHours[$indexNext];
-
-                    $closeTime = $today->format('Y-m-d') . ' ' . $todayRow['close'];
-                    $openTime = $tomorrow->format('Y-m-d') . ' ' . $nextRow['open'];
-
-            } else {
-                // Random fallback times if no data
-                $closeTime = $today->format('Y-m-d') . ' ' . '23:00';
-                $openTime =  $today->format('Y-m-d') . ' ' . '08:00';
+        // Regular hours
+        if (! empty($regularHours)) {
+            // Look for today’s row
+            $idx = array_search($todayName, array_column($regularHours, 'day'));
+            if ($idx !== false) {
+                $todayRow = $regularHours[$idx];
+                // wrap to Sunday if Saturday
+                $nextRow  = $regularHours[($idx + 1) % count($regularHours)];
+                
+                $closeTime = $today->format('Y-m-d') . ' ' . $todayRow['close'];
+                $openTime  = $tomorrow->format('Y-m-d') . ' ' . $nextRow['open'];
             }
+        }
 
+        // Override Regular hours
+        foreach ($orHours as $row) {
+            // skip if no date or unparseable
+            if (empty($row['ordate'])) {
+                continue;
+            }
+            $specialDate = DateTime::createFromFormat('Y-m-d', $row['ordate']);
+            if (! $specialDate) {
+                continue;
+            }
+            // if it really is _today_, take it and stop
+            if ($specialDate->format('Y-m-d') === $today->format('Y-m-d')) {
+                $closeTime    = $row['orclose'];
+                $openTime     = $row['oropen'];
+                $closeMessage = trim((string)$row['ormessage']) ?: $closeMessage;
+                break;
+            }
         }
 
         // Structure the closing event into an array
@@ -175,137 +188,126 @@ return function($page) {
 
     // Function to find the next gap in upcoming events greater than 90 minutes
     function findGap(
-        array $eventsArray,
-        // Set to a 90 minute gap
-        int $minGap = 90 * 60,
-        DateTimeImmutable $from = null
+        array $events,
+        int $minGap = 90*60,
+        DateTimeImmutable $now = null
     ): ?array {
-        $from       = $from ?: new DateTimeImmutable();
+        $now = $now ?: new DateTimeImmutable;
 
-        // Sort a copy by raw start to get soonest‐upcoming event
-        $byStart = $eventsArray;
-        usort($byStart, fn($a, $b) =>
-            (new DateTimeImmutable($a['start_date']))
-            <=> 
-            (new DateTimeImmutable($b['start_date']))
-        );
+        // build buffered windows
+        $bufs = array_map(function($e) {
+            $s = (new DateTimeImmutable($e['start_date']))
+                    ->sub(new DateInterval('PT'.$e['setup_time'].'M'));
+            $t = (new DateTimeImmutable($e['end_date']))
+                    ->add(new DateInterval('PT'.$e['teardown_time'].'M'));
+            return ['event'=>$e,'bufStart'=>$s,'bufEnd'=>$t];
+        }, $events);
 
-        // find title of first event starting >= $from
-        $soonestTitle = null;
-        foreach ($byStart as $e) {
-            if (new DateTimeImmutable($e['start_date']) >= $from) {
-                $soonestTitle = $e['title'] ?? null;
+        // 1) find an ongoing event
+        $ongoing = null;
+        foreach ($bufs as $b) {
+            if ($b['bufStart'] <= $now && $now <= $b['bufEnd']) {
+                $ongoing = $b;   // keep the whole buffer record
                 break;
             }
         }
 
-        // Also compute setup/teardown–buffered status of the VERY first event
-        if (isset($byStart[0])) {
-            $first = $byStart[0];
-            $bufStart = (new DateTimeImmutable($first['start_date']))
-                            ->sub(new DateInterval('PT'.$first['setup_time'].'M'));
-            $bufEnd   = (new DateTimeImmutable($first['end_date']))
-                            ->add(new DateInterval('PT'.$first['teardown_time'].'M'));
-            $isAfterSoonestStart = $from >= $bufStart;
-            $isEventOngoing      = $from >= $bufStart && $from <= $bufEnd;
+        // 2) sort by bufStart so we can find the next future one
+        usort($bufs, fn($a,$b) => $a['bufStart'] <=> $b['bufStart']);
+
+        // 3) if nothing’s ongoing, find the next event-in-future
+        $nextEvt = null;
+        if (!$ongoing) {
+            foreach ($bufs as $b) {
+                if ($b['bufStart'] > $now) {
+                    $nextEvt = $b;
+                    break;
+                }
+            }
+        }
+
+        // 4) compute the free‐gap
+        //    if an event is ongoing → gap starts when it ends
+        //    else if next event exists → gap starts now
+        //    else → gap starts after last teardown
+        if ($ongoing) {
+            $gapStart = $ongoing['bufEnd'];
+        } elseif ($nextEvt) {
+            $gapStart = $now;
         } else {
-            $isAfterSoonestStart = false;
-            $isEventOngoing      = false;
+            // no future events at all
+            $last = end($bufs);
+            $gapStart = $last['bufEnd'];
         }
 
-        // Sort original events by buffered start and scan for a gap
-        usort($eventsArray, function($a, $b) {
-            $aBuf = (new DateTimeImmutable($a['start_date']))
-                        ->sub(new DateInterval('PT'.$a['setup_time'].'M'));
-            $bBuf = (new DateTimeImmutable($b['start_date']))
-                        ->sub(new DateInterval('PT'.$b['setup_time'].'M'));
-            return $aBuf <=> $bBuf;
-        });
+        // gap end is the next event’s bufStart, or null if none
+        $gapEnd = $nextEvt['bufStart'] ?? null;
 
-        $freeStart = null;
-        $freeEnd   = null;
+        // if gap is too small, bail out (no gap)
+        if ($gapEnd && ($gapEnd->getTimestamp() - $gapStart->getTimestamp()) < $minGap) {
+            return null;
+        }
 
-        // Check gap *before* first buffered event
-        if (!empty($eventsArray)) {
-            $firstBufStart = (new DateTimeImmutable($eventsArray[0]['start_date']))
-                                ->sub(new DateInterval('PT'.$eventsArray[0]['setup_time'].'M'));
-            $gap = $firstBufStart->getTimestamp() - $from->getTimestamp();
-            if ($firstBufStart > $from && $gap >= $minGap) {
-                $freeStart = $from;
-                $freeEnd   = $firstBufStart;
+        // 5) is this the last event of the day?
+        //    (i.e. no event whose raw start_date > now)
+        $hasLater = false;
+        foreach ($events as $e) {
+            if (new DateTimeImmutable($e['start_date']) > $now) {
+                $hasLater = true;
+                break;
             }
         }
+        $isLast = !$hasLater;
 
-        // If not found yet, scan between events
-        if ($freeStart === null) {
-            $currentEnd = $from;
-            foreach ($eventsArray as $e) {
-                $bS = (new DateTimeImmutable($e['start_date']))
-                        ->sub(new DateInterval('PT'.$e['setup_time'].'M'));
-                $bE = (new DateTimeImmutable($e['end_date']))
-                        ->add(new DateInterval('PT'.$e['teardown_time'].'M'));
-
-                if ($bE <= $from) {
-                    continue;
-                }
-                if ($bS > $currentEnd) {
-                    $gap = $bS->getTimestamp() - $currentEnd->getTimestamp();
-                    if ($gap >= $minGap) {
-                        $freeStart = $currentEnd;
-                        $freeEnd   = $bS;
-                        break;
-                    }
-                }
-                $currentEnd = max($currentEnd, $bE);
-            }
-        }
-
-        // Check if current event is last in the array
-        $isLastEvent = false;
-        if ($soonestTitle !== null && !empty($byStart)) {
-            $lastEvent = end($byStart); // Last by start_date
-            $isLastEvent = ($lastEvent['title'] ?? null) === $soonestTitle;
-        }
-
-        // Single return
-        if ($freeStart !== null) {
-            return [
-                'start_date'          => $freeStart,
-                'end_date'            => $freeEnd,
-                'isAfterSoonestStart' => $isAfterSoonestStart,
-                'isEventOngoing'      => $isEventOngoing,
-                'soonestTitle'        => $soonestTitle,
-                'isLastEvent'         => $isLastEvent
-            ];
-        }
-
-        return null;
+        return [
+        'start_date'       => $gapStart,
+        'end_date'         => $gapEnd,
+        'isEventOngoing'   => $ongoing !== null,
+        'isLastEvent'      => $isLast,
+        ];
     }
+
     
     $arrayReady = rebuildArray($jsonFull, $page);
-    $nextGap = findgap($arrayReady);
-    
-    //TODO - Rewrite this, need it to not fire null when no upcoming events at end of the day
-    // Check the variable from the function findgap to see if there is an event running
-    if ($nextGap !== null) {
-        if ($nextGap['isLastEvent'] && $nextGap['isEventOngoing']) {
-            $roomStatus = "Room is currently occupied, and will be unavailable for the rest of the day";
-        } elseif ($nextGap['isLastEvent'] && !$nextGap['isEventOngoing']) {
-            $roomStatus = "Room is currently available, We will be closing at " . $nextGap['start_date']->format('g:ia');
-        } elseif ($nextGap['isEventOngoing'] === false) {
-            $roomStatus = "Room is currently available, will be occupied again at " . $nextGap['end_date']->format('g:ia');
-        } else {
-            $roomStatus = "Room is currently occupied, will be available again at " . $nextGap['start_date']->format('g:ia');
-        }
-    } else {
-        // Fallback if no gap was found at all
-        $roomStatus = "No upcoming events or availability information could be determined.";
+
+    // if the only event in here is the close‐event
+    if (count($arrayReady) === 1) {
+        $only   = $arrayReady[0];
+        $closeT = new DateTimeImmutable($only['start_date']);
+        $roomStatus = "Room is available until " . $closeT->format('g:ia');
     }
-    
+    else {
+        $nextGap = findGap($arrayReady);
+        if ($nextGap !== null) {
+            // Currently occupied?
+            if ($nextGap['isEventOngoing']) {
+                if ($nextGap['isLastEvent']) {
+                    $roomStatus = "Room is currently occupied, and will be unavailable for the rest of the day";
+                } else {
+                    $roomStatus = "Room is currently occupied, will be available again at "
+                                . $nextGap['start_date']->format('g:ia');
+                }
+
+            // Currently free
+            } else {
+                if ($nextGap['isLastEvent']) {
+                    $roomStatus = "Room is currently available; we will be closing at "
+                                . $nextGap['start_date']->format('g:ia');
+                } else {
+                    $roomStatus = "Room is currently available; will be occupied again at "
+                                . $nextGap['end_date']->format('g:ia');
+                }
+            }
+
+        } else {
+            // no gap at all
+            $roomStatus = "No upcoming events or availability information could be determined.";
+        }
+    }  
+
     return [
         'arrayReady' => $arrayReady,
-        'roomStatus' => $roomStatus,
-        'nextGap' => $nextGap,
+        'roomStatus' => $roomStatus
     ];
 };
 
