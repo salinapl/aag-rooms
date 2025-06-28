@@ -53,6 +53,11 @@ columns:
         query: page.images
         multiple: false
         label: Room QR Code
+      description:
+        width: 2/2
+        label: Room Description
+        type: text
+        maxlength: 160
   config:
     fields:
       line:

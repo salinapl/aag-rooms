@@ -4,12 +4,18 @@
     $second = date('s', $now);
     $offset = ($minute < 30) ? 0 : 30;
     $timelineStart = strtotime(date('H:', $now) . $offset . ':00');
-    $timelineEnd = $timelineStart + (3 * 60 * 60);
+    $window = $page->noticetoggle()->bool()
+        ? 2.5 * 60 * 60  // Notice enabled, 2 hr 30 min window
+        : 3 * 60 * 60;  // Notice disabled, 3 hr window
+    
+    // build your slots in 30 min increments:
+    $timelineEnd = $timelineStart + $window;
     $slots = [];
 
     for ($t = $timelineStart; $t < $timelineEnd; $t += 1800) {
         $slots[] = date('g:ia', $t);
     }
+
 ?>
 <div class="timeline">
     <div class="time-labels">

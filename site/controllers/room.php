@@ -82,7 +82,6 @@ return function($page) {
 
     $jsonFull = null;
     $jsonFull = F::read('assets/json/test_data.json');
-    $jsonArraydecode = json_decode($jsonFull, true);
 
     // Example json array data end
 
@@ -300,8 +299,7 @@ return function($page) {
 
     return [
         'arrayReady' => $arrayReady,
-        'roomStatus' => $roomStatus,
-        'jsonArraydecode' => $jsonArraydecode
+        'roomStatus' => $roomStatus
     ];
 };
 
