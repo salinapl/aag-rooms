@@ -74,7 +74,7 @@ h1, .time, .sidebar > p{
     flex: 1 auto;
 }
 .time-labels {
-    width: 103px;
+    min-width: 20%;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -86,7 +86,7 @@ h1, .time, .sidebar > p{
 }
 .events-column {
     position: relative;
-    width: 300px;
+    width: 100%;
     /* Changes height based on the time span, currently set at 3 hours (7 times 60px) */
     height: 7 * 60px;
     border-left: 3px solid #000;
@@ -94,6 +94,7 @@ h1, .time, .sidebar > p{
 }
 .event {
     position: absolute;
+    margin-left: 5px;
     left: 0;
     width: 100%;
     border: 3px solid #000;

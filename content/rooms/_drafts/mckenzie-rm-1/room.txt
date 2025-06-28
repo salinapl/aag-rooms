@@ -19,8 +19,8 @@ Orhours:
   ormessage: Library is Closed
 - 
   ordate: 2025-06-28
-  orclose: 14:00:00
-  oropen: 22:00:00
+  orclose: 18:00:00
+  oropen: 12:00:00
   ormessage: test 2
 
 ----
@@ -37,7 +37,7 @@ Feedurl: https://calendar.salinapubliclibrary.org/events/feed/json?
 
 ----
 
-Feedflags: &start=now&end=+12hours&rooms[90]=90
+Feedflags: &start=now&quantity=10&rooms[90]=90
 
 ----
 

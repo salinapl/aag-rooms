@@ -66,6 +66,7 @@ return function($page) {
     ]);
 
     $jsonFull = curl_exec($curl);
+
     $err = curl_error($curl);
 
     curl_close($curl);
@@ -76,6 +77,14 @@ return function($page) {
 
     }
     // End Auth0 contributed code
+
+    // Example json array data start
+
+    $jsonFull = null;
+    $jsonFull = F::read('assets/json/test_data.json');
+    $jsonArraydecode = json_decode($jsonFull, true);
+
+    // Example json array data end
 
     // Decodes, cleans up, then rebuilds the json array
     // Need to pull in page variables for some bits to work
@@ -203,65 +212,51 @@ return function($page) {
             return ['event'=>$e,'bufStart'=>$s,'bufEnd'=>$t];
         }, $events);
 
-        // find an ongoing event
-        $ongoing = null;
-        foreach ($bufs as $b) {
-            if ($b['bufStart'] <= $now && $now <= $b['bufEnd']) {
-                $ongoing = $b;   // keep the whole buffer record
-                break;
-            }
-        }
-
         // sort by bufStart so we can find the next future one
         usort($bufs, fn($a,$b) => $a['bufStart'] <=> $b['bufStart']);
 
-        // if nothing’s ongoing, find the next event-in-future
+        // find ongoing (if any) and next future event
+        $ongoing = null;
         $nextEvt = null;
-        if (!$ongoing) {
-            foreach ($bufs as $b) {
-                if ($b['bufStart'] > $now) {
-                    $nextEvt = $b;
-                    break;
-                }
+        foreach ($bufs as $b) {
+            if (!$ongoing && $b['bufStart'] <= $now && $now <= $b['bufEnd']) {
+                $ongoing = $b;
             }
+            if (!$nextEvt && $b['bufStart'] > $now) {
+                $nextEvt = $b;
+            }
+            if ($ongoing && $nextEvt) break;
         }
 
-        //    if an event is ongoing > gap starts when it ends
-        //    else if next event exists > gap starts now
-        //    else > gap starts after last teardown
+        $isLast = ($nextEvt === null);
+        
+        // default gap boundaries
+        // TODO explain more
         if ($ongoing) {
             $gapStart = $ongoing['bufEnd'];
-        } elseif ($nextEvt) {
-            $gapStart = $now;
         } else {
-            // no future events at all
-            $last = end($bufs);
-            $gapStart = $last['bufEnd'];
+            $gapStart = $now;
         }
-
-        // gap end is the next event’s bufStart, or null if none
         $gapEnd = $nextEvt['bufStart'] ?? null;
 
-        // if gap is too small, bail out (no gap)
-        if ($gapEnd && ($gapEnd->getTimestamp() - $gapStart->getTimestamp()) < $minGap) {
-            return null;
+        if ($gapEnd !== null && ($gapEnd->getTimestamp() - $gapStart->getTimestamp()) < $minGap) {
+            // we consider this "no suitable gap" => treat as last
+            $nextEvt = null;                // mark no future event
+            // $ongoing = null;             // optional, up to you whether isEventOngoing stays true
+            // grab the *actual* last event’s start_date from our sorted buffers
+            $lastBuf     = end($bufs);
+            $gapStart    = new DateTimeImmutable($lastBuf['event']['start_date']);
+            $gapEnd      = null;
         }
 
-        // is this the last event of the day?
-        $hasLater = false;
-        foreach ($events as $e) {
-            if (new DateTimeImmutable($e['start_date']) > $now) {
-                $hasLater = true;
-                break;
-            }
-        }
-        $isLast = !$hasLater;
+        // is last event?
+        $isLast = $nextEvt === null;
 
         return [
-        'start_date'       => $gapStart,
-        'end_date'         => $gapEnd,
-        'isEventOngoing'   => $ongoing !== null,
-        'isLastEvent'      => $isLast,
+            'start_date'       => $gapStart,
+            'end_date'         => $gapEnd,
+            'isEventOngoing'   => $ongoing !== null,
+            'isLastEvent'      => $isLast,
         ];
     }
 
@@ -272,7 +267,7 @@ return function($page) {
     if (count($arrayReady) === 1) {
         $only   = $arrayReady[0];
         $closeT = new DateTimeImmutable($only['start_date']);
-        $roomStatus = "Room is available until " . $closeT->format('g:ia');
+        $roomStatus = "Room is currently available; we will be closing at " . $closeT->format('g:ia');
     }
     else {
         $nextGap = findGap($arrayReady);
@@ -305,7 +300,8 @@ return function($page) {
 
     return [
         'arrayReady' => $arrayReady,
-        'roomStatus' => $roomStatus
+        'roomStatus' => $roomStatus,
+        'jsonArraydecode' => $jsonArraydecode
     ];
 };
 

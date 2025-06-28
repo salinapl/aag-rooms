@@ -19,17 +19,31 @@
     </div>
     <div class="events-column">
         <?php if (!empty($arrayReady)): ?>
-            <?php foreach($arrayReady as $jsonData): ?>
+            <?php foreach($arrayReady as $data): ?>
                 <?php 
-                    if ($jsonData['end_date'] <= $timelineStart || $jsonData['start_date'] >= $timelineEnd) continue;
-                    $startOffsetMin = max(0, ($jsonData['start_date'] - $timelineStart) / 60);
-                    $durationMin = ($jsonData['end_date'] - $jsonData['start_date']) / 60;
+                    $start = is_int($data['start_date'])
+                            ? $data['start_date']
+                            : strtotime($data['start_date']);
+                    $end   = is_int($data['end_date'])
+                            ? $data['end_date']
+                            : strtotime($data['end_date']);
+                    if ($end <= $timelineStart || $start >= $timelineEnd) continue;
 
-                    $top = $startOffsetMin * 2;
-                    $height = $durationMin * 2;
+                    $actualStart = max($start, $timelineStart);
+                    $actualEnd   = min($end,   $timelineEnd);
+
+                    // 4) compute offset & duration (in minutes), then clamp ≥ 0
+                    $offsetMins   = max(0, ($actualStart - $timelineStart) / 60);
+                    $durationMins = max(0, ($actualEnd   - $actualStart)   / 60);
+
+                    // $startOffsetMin = max(0, ($start - $timelineStart) / 60);
+                    // $durationMin = ($end - $start) / 60;
+
+                    $top = $offsetMins * 2;
+                    $height = $durationMins * 2;
                 ?>
                 <div class="event" style="top: <?= $top ?>px; height: <?= $height ?>px;">
-                    <?= htmlspecialchars($jsonData['title']) ?>
+                    <?= htmlspecialchars($data['title']) ?>
                 </div>
             <?php endforeach ?>
         <?php else: ?>

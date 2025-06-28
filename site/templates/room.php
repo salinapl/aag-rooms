@@ -14,8 +14,8 @@
                 <p> The room is available all day today</p>
             <?php else: ?>
                 <?php 
-                    // var_dump($arrayReady)
-                     snippet('schedule') 
+                    // var_dump($jsonArraydecode)
+                    snippet('timeline') 
                 ?>
             <?php endif ?>
         </div>
