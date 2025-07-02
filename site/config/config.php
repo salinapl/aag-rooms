@@ -1,7 +1,10 @@
 <?php
 return [
-    'debug' => true,
+    'debug' => false,
     'panel' =>[
-        'install' => true
+        'install' => false,
+        'vue' => [
+            'compiler' => false
+        ]
     ]
 ];

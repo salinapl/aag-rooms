@@ -58,3 +58,4 @@ index.php
 /site/plugins/kirby3-dotenv-5.0.0
 .env
 .env.localhost
+site/config/config.php
