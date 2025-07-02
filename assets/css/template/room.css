@@ -1,11 +1,41 @@
 
 html, body { height:100%; }
 body {
-    font: normal 1.5em "NicoClean";
+    font: normal 16px "NicoClean";
+    font-smooth: never;
     width:100%;
     display:flex;
     flex-direction: row;
     overflow:hidden;
+}
+h1 {
+    margin-bottom: 0;
+    padding: 5px;
+    width:100%;
+}
+.font-headline {
+    font: bold 48px "NicoClean";
+    font-smooth: never;
+}
+.font-large {
+    font: normal 26px "BlockKie";
+    font-smooth: never;
+}
+.font-medium {
+    font: bold 32px "NicoClean";
+    font-smooth: never;
+}
+.font-small {
+    font: normal 16px "NicoPups";
+    font-smooth: never;
+}
+.threehr-window {
+    /* Changes height based on the time span, 
+    currently set at 3 hours (6 times 60px, 2px per min) */
+    height: calc(6 * 60px);
+}
+.twohr-window {
+    height: calc(5 * 60px);
 }
 .main{
     max-width:66.6%;
@@ -16,17 +46,12 @@ body {
     flex: 2 1;
     max-height:480px;
 }
-h1 {
-    font-weight: bold;
-    padding: 0 0 5px 5px;
-    font-size:2em;
-    width:100%;
-}
 .notice{
     text-align: center;
     margin:5px;
+    padding: 5px;
     width:100%;
-    border: #000 3px dotted;
+    border: #000 3px dashed;
 }
 ul.schedule {
     padding:0;
@@ -35,7 +60,6 @@ ul.schedule {
     list-style: none;
     flex: 1 auto;
     height:360px;
-    font-family: "NicoClean", monospace;
 }
 .schedule > li {
     padding: 5px;
@@ -49,9 +73,7 @@ ul.schedule {
 .schedule > li:nth-child(odd) {
     background-color: #aaa;
 }
-/* h1, .time, .sidebar > p{
-    font-weight:bold;
-} */
+
 .sidebar {
     flex: 1 1;
     padding:0 0 10px 5px;
@@ -89,8 +111,6 @@ ul.schedule {
 .events-column {
     position: relative;
     width: 100%;
-    /* Changes height based on the time span, currently set at 3 hours (7 times 60px) */
-    height: 7 * 60px;
     border-left: 3px solid #000;
     margin-bottom: 20px;
 }
@@ -106,7 +126,6 @@ ul.schedule {
     border: 3px solid #000;
     box-sizing: border-box;
     border-radius: 5px;
-    font-size: 0.9em;
 }
 .continues {
     border-bottom: 0px solid #000;

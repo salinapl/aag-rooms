@@ -5,9 +5,12 @@
     $offset = ($minute < 30) ? 0 : 30;
     $timelineStart = strtotime(date('H:', $now) . $offset . ':00');
     $window = $page->noticetoggle()->bool()
-        ? 2.5 * 60 * 60  // Notice enabled, 2 hr 30 min window
+        ? 2.5 * 60 * 60  // Notice enabled, 2.5 hr window
         : 3 * 60 * 60;  // Notice disabled, 3 hr window
-    
+    $windowCss = $page->noticetoggle()->bool()
+        ? "twohr-window"  // Notice enabled, 2.5 hr window
+        : "threehr-window";  // Notice disabled, 3 hr window
+
     // build your slots in 30 min increments:
     $timelineEnd = $timelineStart + $window;
         $slots = [];
@@ -30,12 +33,12 @@
     }
 ?>
 <div class="timeline">
-    <div class="time-labels">
+    <div class="time-labels font-large">
         <?php foreach ($slots as $label): ?>
         <div><?= $label ?></div>
         <?php endforeach; ?>
     </div>
-    <div class="events-column">
+    <div class="events-column <?= $windowCss ?>">
         <?php if (!empty($arrayReady)): ?>
             <?php foreach($arrayReady as $data): ?>
                 <?php 
@@ -50,12 +53,14 @@
                     $actualStart = max($start, $timelineStart);
                     $actualEnd   = min($end,   $timelineEnd);
 
-                    // 4) compute offset & duration (in minutes), then clamp ≥ 0
+                    // compute offset & duration (in minutes), then clamp
                     $offsetMins   = max(0, ($actualStart - $timelineStart) / 60);
                     $durationMins = max(0, ($actualEnd   - $actualStart)   / 60);
 
-                    $top = $offsetMins * 2;
-                    $height = $durationMins * 2;
+                    // for some reason even x2 doesn't get the labels to line up
+                    // with the font I'm using.
+                    $top = $offsetMins * 2.1;
+                    $height = $durationMins * 2.1;
 
                     // Check if event overflows
                     $isOverflow = ($end > $timelineEnd);

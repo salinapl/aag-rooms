@@ -2,11 +2,11 @@ Title: McKenzie Room 1
 
 ----
 
-Noticetoggle: true
+Noticetoggle: false
 
 ----
 
-Notice: This is an example notice testing a ton of text here I wonder if I can put in a character limit?
+Notice: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut mauris porta, semper dolor lobortis, hendrerit metus. Etiam imperdiet vitae sem quis ullamcorper. Vestibulum mauri
 
 ----
 

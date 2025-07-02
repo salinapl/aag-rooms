@@ -1,6 +1,8 @@
 <?php snippet('header') ?>
+        <?= css('assets/fonts/BlockKie-v1.0\fonts.css') ?>
         <?= css('assets/fonts/NicoFontPack-v1.0\Base Font Files\NicoClean\fonts.css') ?>
         <?= css('assets/fonts/NicoFontPack-v1.0\Base Font Files\NicoBold\fonts.css') ?>
+        <?= css('assets/fonts/NicoFontPack-v1.0\Base Font Files\NicoPups\fonts.css') ?>
         <?= css('assets/css/template/room.css') ?>
         <style>
 
@@ -8,7 +10,7 @@
     </head>
     <body>
         <div class="main">
-            <h1><?= $page->title() ?></h1>
+            <h1 class="font-headline"><?= $page->title() ?></h1>
             <?php if($page->noticetoggle()->bool()): ?>
                 <p class="notice"><?= $page->notice() ?></p>
             <?php endif ?>
@@ -21,7 +23,7 @@
                 ?>
             <?php endif ?>
         </div>
-        <div class="sidebar">
+        <div class="sidebar font-large">
             <p>
                 <?= $roomStatus ?>
                  

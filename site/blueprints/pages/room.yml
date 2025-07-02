@@ -9,7 +9,7 @@ columns:
       notice:
         width: 3/4
         type: text
-        maxlength: 96
+        maxlength: 180
         when:
           noticetoggle: true
       emptynotice:
