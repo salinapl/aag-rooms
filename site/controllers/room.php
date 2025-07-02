@@ -80,8 +80,8 @@ return function($page) {
 
     // Example json array data start
 
-    $jsonFull = null;
-    $jsonFull = F::read('assets/json/test_data.json');
+    // $jsonFull = null;
+    // $jsonFull = F::read('assets/json/test_data.json');
 
     // Example json array data end
 
@@ -199,66 +199,76 @@ return function($page) {
         array $events,
         int $minGap = 90*60,
         DateTimeImmutable $now = null
-    ): ?array {
+    ) {
         $now = $now ?: new DateTimeImmutable;
 
-        // build buffered windows
-        $bufs = array_map(function($e) {
+        // Add setup/teardown to event length
+        $padEvents = array_map(function($e){
             $s = (new DateTimeImmutable($e['start_date']))
                     ->sub(new DateInterval('PT'.$e['setup_time'].'M'));
             $t = (new DateTimeImmutable($e['end_date']))
                     ->add(new DateInterval('PT'.$e['teardown_time'].'M'));
-            return ['event'=>$e,'bufStart'=>$s,'bufEnd'=>$t];
+            return ['event'=>$e,'padStart'=>$s,'padEnd'=>$t];
         }, $events);
 
-        // sort by bufStart so we can find the next future one
-        usort($bufs, fn($a,$b) => $a['bufStart'] <=> $b['bufStart']);
+        usort($padEvents, fn($a,$b) => $a['padStart'] <=> $b['padStart']);
 
-        // find ongoing (if any) and next future event
-        $ongoing = null;
-        $nextEvt = null;
-        foreach ($bufs as $b) {
-            if (!$ongoing && $b['bufStart'] <= $now && $now <= $b['bufEnd']) {
-                $ongoing = $b;
+        // Set ongoing event if true
+        $isEventOngoing = false;
+        foreach ($padEvents as $e) {
+            if (!$isEventOngoing && $e['padStart'] <= $now && $now <= $e['padEnd']) {
+                $isEventOngoing = true;
+                break;
             }
-            if (!$nextEvt && $b['bufStart'] > $now) {
-                $nextEvt = $b;
-            }
-            if ($ongoing && $nextEvt) break;
         }
 
-        $isLast = ($nextEvt === null);
-        
-        // default gap boundaries
-        // TODO explain more
-        if ($ongoing) {
-            $gapStart = $ongoing['bufEnd'];
+        $gaps = [];
+
+        for ($i = 0, $n = count($padEvents) - 1; $i < $n; $i++) {
+            $end = $padEvents[$i]['padEnd'];
+            $start = $padEvents[$i+1]['padStart'];
+
+            // Only record positive gaps
+            if ($end < $start) {
+                $gaps[] = [
+                    'start_date' => $end->format('Y-m-d H:i:s'),
+                    'end_date'   => $start->format('Y-m-d H:i:s'),
+                ];
+            }
+        }
+        // Set default flags for isLastEvent, nextGap, & nextEvent
+        $noGap = false;
+        $nextGap = null;
+        $nextEvent = null;
+        // if there are no event gaps, return noGap true
+        if (count($gaps) == 0) {
+            $noGap = true;
         } else {
-            $gapStart = $now;
+            $nextGap = $gaps[0]['start_date'];
         }
-        $gapEnd = $nextEvt['bufStart'] ?? null;
-
-        if ($gapEnd !== null && ($gapEnd->getTimestamp() - $gapStart->getTimestamp()) < $minGap) {
-            // we consider this "no suitable gap" => treat as last
-            $nextEvt = null;                // mark no future event
-            // $ongoing = null;             // optional, up to you whether isEventOngoing stays true
-            // grab the *actual* last event’s start_date from our sorted buffers
-            $lastBuf     = end($bufs);
-            $gapStart    = new DateTimeImmutable($lastBuf['event']['start_date']);
-            $gapEnd      = null;
+        if ($isEventOngoing == false && count($padEvents) > 1) {
+            $nextEvent = $padEvents[0]['padStart'];
         }
+        foreach ($gaps as $key => &$entry) {
+            $start = new DateTime($entry['start_date']);
+            $end = new DateTime($entry['end_date']);
+            $interval = $end->getTimestamp() - $start->getTimestamp();
 
-        // is last event?
-        $isLast = $nextEvt === null;
+            if ($interval < $minGap) {
+                unset($gaps[$key]);
+            }
+        }
+        unset($entry); // Break the reference just to be safe
 
         return [
-            'start_date'       => $gapStart,
-            'end_date'         => $gapEnd,
-            'isEventOngoing'   => $ongoing !== null,
-            'isLastEvent'      => $isLast,
+        //  'gaps'              => $gaps,
+            'isEventOngoing'    => $isEventOngoing,
+            'noGap'             => $noGap,
+            'nextGap'           => $nextGap,
+            'nextEvent'         => $nextEvent
         ];
-    }
 
+    }
     
     $arrayReady = rebuildArray($jsonFull, $page);
 
@@ -269,27 +279,22 @@ return function($page) {
         $roomStatus = "Room is currently available; we will be closing at " . $closeT->format('g:ia');
     }
     else {
-        $nextGap = findGap($arrayReady);
-        if ($nextGap !== null) {
+        $gapCalc = findGap($arrayReady);
+        if ($gapCalc['isEventOngoing'] !== null) {
             // Currently occupied?
-            if ($nextGap['isEventOngoing']) {
-                if ($nextGap['isLastEvent']) {
+            if ($gapCalc['isEventOngoing']) {
+                if ($gapCalc['noGap']) {
                     $roomStatus = "Room is currently occupied, and will be unavailable for the rest of the day";
                 } else {
                     $roomStatus = "Room is currently occupied, will be available again at "
-                                . $nextGap['start_date']->format('g:ia');
+                                . $gapCalc['nextGap']->format('g:ia');
                 }
 
             // Currently free
             } else {
-                if ($nextGap['isLastEvent']) {
-                    $roomStatus = "Room is currently available; we will be closing at "
-                                . $nextGap['start_date']->format('g:ia');
-                } else {
-                    $roomStatus = "Room is currently available; will be occupied again at "
-                                . $nextGap['end_date']->format('g:ia');
+                $roomStatus = "Room is currently available; will be occupied again at "
+                                . $gapCalc['nextEvent']->format('g:ia');
                 }
-            }
 
         } else {
             // no gap at all
@@ -299,7 +304,7 @@ return function($page) {
 
     return [
         'arrayReady' => $arrayReady,
-        'roomStatus' => $roomStatus
+        'roomStatus' => $roomStatus,
     ];
 };
 

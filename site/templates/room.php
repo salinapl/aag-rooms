@@ -1,4 +1,6 @@
 <?php snippet('header') ?>
+        <?= css('assets/fonts/NicoFontPack-v1.0\Base Font Files\NicoClean\fonts.css') ?>
+        <?= css('assets/fonts/NicoFontPack-v1.0\Base Font Files\NicoBold\fonts.css') ?>
         <?= css('assets/css/template/room.css') ?>
         <style>
 

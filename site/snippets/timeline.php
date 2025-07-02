@@ -10,12 +10,24 @@
     
     // build your slots in 30 min increments:
     $timelineEnd = $timelineStart + $window;
-    $slots = [];
+        $slots = [];
 
     for ($t = $timelineStart; $t < $timelineEnd; $t += 1800) {
         $slots[] = date('g:ia', $t);
     }
 
+    // Count upcoming events after the window 
+    // starts at -1 to account for closing event
+    $upcomingEvents = -1;
+    foreach ($arrayReady as $data) {
+        $start = is_int($data['start_date'])
+            ? $data['start_date']
+            : strtotime($data['start_date']);
+
+        if ($start >= $timelineEnd) {
+            $upcomingEvents++;
+        }
+    }
 ?>
 <div class="timeline">
     <div class="time-labels">
@@ -42,18 +54,32 @@
                     $offsetMins   = max(0, ($actualStart - $timelineStart) / 60);
                     $durationMins = max(0, ($actualEnd   - $actualStart)   / 60);
 
-                    // $startOffsetMin = max(0, ($start - $timelineStart) / 60);
-                    // $durationMin = ($end - $start) / 60;
-
                     $top = $offsetMins * 2;
                     $height = $durationMins * 2;
+
+                    // Check if event overflows
+                    $isOverflow = ($end > $timelineEnd);
+
+                    // Assemble css classes
+                    $classes = ['event'];
+                    if ($isOverflow) {
+                        $classes[] = 'continues';
+                    }
+                    $classAttr = implode(' ', $classes);
+
                 ?>
-                <div class="event" style="top: <?= $top ?>px; height: <?= $height ?>px;">
+                <div class="<?= $classAttr ?>" 
+                    style="top: <?= $top ?>px; height: <?= $height ?>px;">
                     <?= htmlspecialchars($data['title']) ?>
                 </div>
             <?php endforeach ?>
         <?php else: ?>
             <div class="no-events">No upcoming events</div>
+        <?php endif ?>
+        <?php if ($upcomingEvents > 0): ?>
+        <div class="event event-footer">
+            +<?= $upcomingEvents ?> Upcoming Event<?php if ($upcomingEvents > 1): ?><?= "s" ?><?php endif ?>
+        </div>
         <?php endif ?>
     </div>
 </div>

@@ -2,7 +2,7 @@ Title: McKenzie Room 1
 
 ----
 
-Noticetoggle: false
+Noticetoggle: true
 
 ----
 
@@ -41,7 +41,7 @@ Feedurl: https://calendar.salinapubliclibrary.org/events/feed/json?
 
 ----
 
-Feedflags: &start=now&quantity=10&rooms[90]=90
+Feedflags: &start=now&end=+12hours&rooms[90]=90
 
 ----
 
