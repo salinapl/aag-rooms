@@ -34,15 +34,21 @@ This repository only contains the content pages of the site, you will need to do
 1. Start your webserver and navigate to **yourdomain.example.com/location-of-kirbycms-install/panel** and you will be asked to create an account.
 1. After creating the account, you will be able to log in and start adding images to create a campaign. The download includes example pages to get started, but you can edit or remove these pages as long as you replace them with ones using the same or similar templates. Doing more than that will require knowledge of how Kirby works. Examples of what templates do what will be provided later in this document.
 
+# Plugins
+
+aag-rooms uses a plugin to keep private API access information safe, to make it work you will either need to remove the code using this plugin, or install this plugin as well (reccomended)
+- [DotEnv](https://plugins.getkirby.com/bnomei/dotenv)
+
+
 ## Backing up and Installing new Versions
 
 ### Kirby
 Kirby is a Flat-file CMS and does not require a database, which makes it very easy to
-install and backup. Just copy the folder you installed Kirby and LibSignTool to into your backup location to back it up.
+install and backup. Just copy the folder you installed Kirby and aag-rooms to into your backup location to back it up.
 
 To upgrade Kirby, simply download the newest version of the plainkit, Delete the "kirby" and "media" folders from your install folder, and copy the new versions from the plainkit into the folder. Always refer to the offical Kirby documentation for upgrade instructions as these are subject to change between releases.
 
-LibSignTool is built on Kirby 3. Staying within the same generation of releases should be fine, but wait for offical word before upgrading to possible future KirbyCMS generations such as Kirby 4
+aag-rooms is built on Kirby 5. Staying within the same generation of releases should be fine, but wait for offical word before upgrading to possible future KirbyCMS generations such as Kirby 6
 
 #### Kirby 5
 Kirby 5 is now fully supported, Kirby 4 has only been tested up to v4.8.0
