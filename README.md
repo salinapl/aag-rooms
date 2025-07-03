@@ -1,7 +1,7 @@
 # aag-rooms - At-A-Glance Library Room Reservation status display using Kirby
 A Simple and flexible room reservation status display for e-ink or other non-touch displays using [Kirby](https://getkirby.com)
 
-![example](https://github.com/user-attachments/assets/18a9217b-5817-4ca8-9a20-8d3d1fd7c1ba)
+<img src="https://github.com/user-attachments/assets/18a9217b-5817-4ca8-9a20-8d3d1fd7c1ba" width="45%"></img> <img src="https://github.com/user-attachments/assets/befc8b87-134c-4aa8-9a62-bcbdc2c004a3" width="45%"></img> 
 
 ## Features
 
