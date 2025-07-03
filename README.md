@@ -53,10 +53,15 @@ aag-rooms is built on Kirby 5. Staying within the same generation of releases sh
 #### Kirby 5
 Kirby 5 is now fully supported, Kirby 4 has only been tested up to v4.8.0
 
-## A Note about Licensing
+## Licenses
 
-While aag-rooms is provided free under the MIT License, Kirby is not.
+While aag-rooms is provided free under the MIT License, other things in this repository are licensed differently.
 
+### Fonts
+- [NicoFonts](https://emhuo.itch.io/nico-pixel-fonts-pack) is licensed under the [SIL OPEN FONT LICENSE Version 1.1](https://openfontlicense.org/documents/OFL.txt)
+- [BlockKie by JoohnFonts](https://fontstruct.com/fontstructors/1669437/joohnfonts) is licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
+
+### Kirby
 You can try Kirby on your local machine or on a test
 server as long as you need to make sure it is the right
 tool for your next project.
