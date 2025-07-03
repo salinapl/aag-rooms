@@ -34,7 +34,7 @@ This repository only contains the content pages of the site, you will need to do
 1. Start your webserver and navigate to **yourdomain.example.com/location-of-kirbycms-install/panel** and you will be asked to create an account.
 1. After creating the account, you will be able to log in and start adding images to create a campaign. The download includes example pages to get started, but you can edit or remove these pages as long as you replace them with ones using the same or similar templates. Doing more than that will require knowledge of how Kirby works. Examples of what templates do what will be provided later in this document.
 
-# Plugins
+### Plugins
 
 aag-rooms uses a plugin to keep private API access information safe, to make it work you will either need to remove the code using this plugin, or install this plugin as well (reccomended)
 - [DotEnv](https://plugins.getkirby.com/bnomei/dotenv)
