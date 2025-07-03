@@ -59,8 +59,8 @@
 
                     // for some reason even x2 doesn't get the labels to line up
                     // with the font I'm using.
-                    $top = $offsetMins * 2.1;
-                    $height = $durationMins * 2.1;
+                    $top = $offsetMins * 2;
+                    $height = $durationMins * 2;
 
                     // Check if event overflows
                     $isOverflow = ($end > $timelineEnd);
@@ -81,10 +81,10 @@
         <?php else: ?>
             <div class="no-events">No upcoming events</div>
         <?php endif ?>
-        <?php if ($upcomingEvents > 0): ?>
+    </div>
+    <?php if ($upcomingEvents > 0): ?>
         <div class="event event-footer">
             +<?= $upcomingEvents ?> Upcoming Event<?php if ($upcomingEvents > 1): ?><?= "s" ?><?php endif ?>
         </div>
-        <?php endif ?>
-    </div>
+    <?php endif ?>
 </div>

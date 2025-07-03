@@ -49,6 +49,7 @@ h1 {
 .notice{
     text-align: center;
     margin:5px;
+    margin-top: -5px;
     padding: 5px;
     width:100%;
     border: #000 3px dashed;
@@ -133,7 +134,8 @@ ul.schedule {
     border-bottom-left-radius: 0px;
 }
 .event-footer {
-    top:360px;
-    margin-top:5px;
-    padding: 3px;
+    bottom: 0;
+    min-height: 0;
+    margin:5px;
+    padding: 5px;
 }

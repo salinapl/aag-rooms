@@ -231,8 +231,8 @@ return function($page) {
             // Only record positive gaps
             if ($end < $start) {
                 $gaps[] = [
-                    'start_date' => $end->format('Y-m-d H:i:s'),
-                    'end_date'   => $start->format('Y-m-d H:i:s'),
+                    'start_date' => $end->format('g:ia'),
+                    'end_date'   => $start->format('g:ia'),
                 ];
             }
         }
@@ -287,7 +287,7 @@ return function($page) {
                     $roomStatus = "Room is currently occupied, and will be unavailable for the rest of the day";
                 } else {
                     $roomStatus = "Room is currently occupied, will be available again at "
-                                . $gapCalc['nextGap']->format('g:ia');
+                                . $gapCalc['nextGap'];
                 }
 
             // Currently free
