@@ -7,18 +7,13 @@ Icon
 # Kirby Files & Folders
 # ------------
 /kirby/*
+/media/*
 /site/config
 /site/accounts
 /site/cache
 composer.json
 index.php
 .htaccess
-
-# Temporary files
-# ---------------
-
-/media/*
-!/media/index.html
 
 # Lock files
 # ---------------
