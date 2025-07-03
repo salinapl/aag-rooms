@@ -9,8 +9,6 @@ Icon
 /kirby/*
 /media/*
 /site/config
-/site/accounts
-/site/cache
 composer.json
 index.php
 .htaccess
