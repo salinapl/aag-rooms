@@ -54,6 +54,10 @@ h1 {
     width:100%;
     border: #000 3px dashed;
 }
+.description {
+    width: 100%;
+    padding: 10px;
+}
 ul.schedule {
     padding:0;
     margin:5px;

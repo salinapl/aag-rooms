@@ -33,7 +33,7 @@ Qr-image: - file://MCyvMvvFN50rlmVP
 
 ----
 
-Description: 
+Description: text description of room
 
 ----
 

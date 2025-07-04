@@ -14,8 +14,8 @@
             <?php if($page->noticetoggle()->bool()): ?>
                 <p class="notice"><?= $page->notice() ?></p>
             <?php endif ?>
-            <?php if(empty($arrayReady)):  ?>
-                <p> The room is available all day today</p>
+            <?php if(count($arrayReady) === 1):  ?>
+                <p class="description"> <?= $page->description() ?></p>
             <?php else: ?>
                 <?php 
                     snippet('timeline') 
