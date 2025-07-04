@@ -10,6 +10,7 @@ A Simple and flexible room reservation status display for e-ink or other non-tou
 - Closing Hour Override per-room
 - Per-room toggleable notice text display
 - Per-room QR code display (must be generated elsewhere and uploaded to interface at this time)
+- Per-Room description that displays when no upcoming events in timeline
 - Ships with integration of LibraryMarket's LibraryCalendar App
 - Can use any event calendar app that has JSON event API with some tweaking
 - Timeline of upcoming events, hides private event titles but keeps event ID for refrence
@@ -20,7 +21,6 @@ A Simple and flexible room reservation status display for e-ink or other non-tou
 ## Planned Features
 
 - Per-Room Color or monochrome CSS
-- Per-Room description that displays when no upcoming events in timeline
 
 ## Download and Install
 
