@@ -2,8 +2,8 @@
 
 Kirby::plugin('salinapl/aag-rooms', [
     'blueprints' => [
-        'pages/rooms' => __DIR__ . '/blueprints/rooms.yml',
-        'pages/room' => __DIR__ . '/blueprints/room.yml'
+        'rooms' => __DIR__ . '/blueprints/rooms.yml',
+        'room' => __DIR__ . '/blueprints/room.yml'
     ],
     'controllers' => [
         'room' => require __DIR__ . '/controllers/room.php'
