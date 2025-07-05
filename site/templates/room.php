@@ -1,4 +1,4 @@
-<?php snippet('header') ?>
+<?php snippet('header-rooms') ?>
         <?= css('assets/fonts/BlockKie-v1.0\fonts.css') ?>
         <?= css('assets/fonts/NicoFontPack-v1.0\Base Font Files\NicoClean\fonts.css') ?>
         <?= css('assets/fonts/NicoFontPack-v1.0\Base Font Files\NicoBold\fonts.css') ?>
