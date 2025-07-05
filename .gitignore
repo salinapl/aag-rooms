@@ -9,8 +9,6 @@ Icon
 /kirby/*
 /media/*
 /site/config
-composer.json
-index.php
 .htaccess
 
 # Lock files

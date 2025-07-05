@@ -81,7 +81,7 @@ return function($page) {
     // Example json array data start
 
     // $jsonFull = null;
-    // $jsonFull = F::read('assets/json/test_data.json');
+    // $jsonFull = F::read('/media/plugins/salinapl/aag-rooms/json/test_data.json');
 
     // Example json array data end
 

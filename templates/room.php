@@ -1,9 +1,9 @@
 <?php snippet('header-rooms') ?>
-        <?= css('assets/fonts/BlockKie-v1.0\fonts.css') ?>
-        <?= css('assets/fonts/NicoFontPack-v1.0\Base Font Files\NicoClean\fonts.css') ?>
-        <?= css('assets/fonts/NicoFontPack-v1.0\Base Font Files\NicoBold\fonts.css') ?>
-        <?= css('assets/fonts/NicoFontPack-v1.0\Base Font Files\NicoPups\fonts.css') ?>
-        <?= css('assets/css/template/room.css') ?>
+        <?= css('/media/plugins/salinapl/aag-rooms/fonts/BlockKie-v1.0\fonts.css') ?>
+        <?= css('/media/plugins/salinapl/aag-rooms/fonts/NicoFontPack-v1.0\base\NicoClean\fonts.css') ?>
+        <?= css('/media/plugins/salinapl/aag-rooms/fonts/NicoFontPack-v1.0\base\NicoBold\fonts.css') ?>
+        <?= css('/media/plugins/salinapl/aag-rooms/fonts/NicoFontPack-v1.0\base\NicoPups\fonts.css') ?>
+        <?= css('/media/plugins/salinapl/aag-rooms/css/template/room.css') ?>
         <style>
 
         </style>
