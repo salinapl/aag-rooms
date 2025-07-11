@@ -65,10 +65,16 @@
                     // Check if event overflows
                     $isOverflow = ($end > $timelineEnd);
 
+                    // Check if event underflows
+                    $isUnderflow = ($start < $timelineStart);
+
                     // Assemble css classes
                     $classes = ['event'];
+                    if ($isUnderflow) {
+                        $classes[] = 'underflow';
+                    }
                     if ($isOverflow) {
-                        $classes[] = 'continues';
+                        $classes[] = 'overflow';
                     }
                     $classAttr = implode(' ', $classes);
 

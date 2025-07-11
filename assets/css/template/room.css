@@ -136,11 +136,31 @@ ul.schedule {
     width: 100%;
     border-image: url('/media/plugins/salinapl/aag-rooms/img/border01.svg');
     border-image-width: 8px;
-    border-image-slice: 7;
+    border-image-slice: 8;
     box-sizing: border-box;
 }
-.continues {
+.underflow {
+    padding-top: 8px;
+    border-image: url('/media/plugins/salinapl/aag-rooms/img/border02.svg');
+    border-image-width: 8px;
+    border-image-slice: 8;
+    border-image-repeat: repeat;
+    box-sizing: border-box;
+}
+.overflow {
     border-image: url('/media/plugins/salinapl/aag-rooms/img/border03.svg');
+    border-image-width: 8px;
+    border-image-slice: 8;
+    border-image-repeat: repeat;
+    box-sizing: border-box;
+}
+.underflow.overflow {
+    padding-top: 8px;
+    border-image: url('/media/plugins/salinapl/aag-rooms/img/border04.svg');
+    border-image-width: 8px;
+    border-image-slice: 8;
+    border-image-repeat: repeat;
+    box-sizing: border-box;
 }
 .event-footer {
     bottom: 0;
