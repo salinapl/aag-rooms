@@ -1,6 +1,7 @@
 
 html, body { height:100%; }
 body {
+    color: #000;
     font: normal 16px "NicoClean";
     font-smooth: never;
     width:100%;
@@ -14,18 +15,22 @@ h1 {
     width:100%;
 }
 .font-headline {
+    color: #000;
     font: bold 48px "NicoClean";
     font-smooth: never;
 }
 .font-large {
+    color: #000;
     font: normal 26px "BlockKie";
     font-smooth: never;
 }
 .font-medium {
+    color: #000;
     font: bold 32px "NicoClean";
     font-smooth: never;
 }
 .font-small {
+    color: #000;
     font: normal 16px "NicoPups";
     font-smooth: never;
 }
@@ -76,7 +81,8 @@ ul.schedule {
 
 }
 .schedule > li:nth-child(odd) {
-    background-color: #aaa;
+    border: 3px solid #000;
+    border-radius: 5px;
 }
 
 .sidebar {
@@ -128,14 +134,13 @@ ul.schedule {
 .event, .event-footer {
     margin-left: 5px;
     width: 100%;
-    border: 3px solid #000;
+    border-image: url('/media/plugins/salinapl/aag-rooms/img/border01.svg');
+    border-image-width: 8px;
+    border-image-slice: 7;
     box-sizing: border-box;
-    border-radius: 5px;
 }
 .continues {
-    border-bottom: 0px solid #000;
-    border-bottom-right-radius: 0px;
-    border-bottom-left-radius: 0px;
+    border-image: url('/media/plugins/salinapl/aag-rooms/img/border03.svg');
 }
 .event-footer {
     bottom: 0;
