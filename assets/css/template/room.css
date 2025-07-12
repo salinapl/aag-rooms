@@ -1,12 +1,22 @@
 
-html, body { height:100%; }
+html, body { 
+    height:100%; 
+    background-color: #777; 
+    display:flex; 
+    align-items: center;
+    justify-content: center;
+}
 body {
     color: #000;
+    background-color: #fff;
     font: normal 16px "NicoClean";
     font-smooth: never;
     width:100%;
+    max-width:800px;
+    max-height: 480px;
     display:flex;
     flex-direction: row;
+    align-items: flex-start;
     overflow:hidden;
 }
 h1 {

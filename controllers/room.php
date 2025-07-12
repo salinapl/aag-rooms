@@ -6,10 +6,19 @@ return function($page) {
     date_default_timezone_set('America/Chicago');    
 
     // Pull in the rest of the page configs
-    $auth_url = $page->authurl();
-    $feedUrl = $page->feedurl();
+    if ($page->orauthurltoggle()->bool() == true) {
+        $authUrl = $page->authurl();
+    } else {
+        $authUrl = $page->parent()->authurl();
+    }
+    if ($page->orfeedurltoggle()->bool() == true) {
+        $feedUrl = $page->feedurl();
+    } else {
+        $feedUrl = $page->parent()->feedurl();
+    }
+    
     $feedFlags = $page->feedflags();
-    $json_url = $feedUrl . $feedFlags;
+    $jsonUrl = $feedUrl . $feedFlags;
 
     // Pull in the oauth info from the env file
     $lc_id = env('LC_API_ID');
@@ -21,7 +30,7 @@ return function($page) {
     $curl = curl_init();
 
     curl_setopt_array($curl, [
-    CURLOPT_URL => "$auth_url",
+    CURLOPT_URL => "$authUrl",
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_ENCODING => "",
     CURLOPT_MAXREDIRS => 10,
@@ -52,7 +61,7 @@ return function($page) {
     $curl = curl_init();
 
     curl_setopt_array($curl, [
-    CURLOPT_URL => "$json_url",
+    CURLOPT_URL => "$jsonUrl",
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_ENCODING => "",
     CURLOPT_MAXREDIRS => 10,

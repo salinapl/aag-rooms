@@ -81,7 +81,7 @@
                 ?>
                 <div class="<?= $classAttr ?>" 
                     style="top: <?= $top ?>px; height: <?= $height ?>px;">
-                    <?= htmlspecialchars($data['title']) ?>
+                    <?= date('g:ia', strtotime($data['start_date'])); ?> - <?= date('g:ia', strtotime($data['end_date'])); ?>: <?= htmlspecialchars($data['title']) ?>
                 </div>
             <?php endforeach ?>
         <?php else: ?>

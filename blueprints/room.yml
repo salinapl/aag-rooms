@@ -58,23 +58,35 @@ columns:
         label: Room Description
         type: text
         maxlength: 160
-  config:
+  orconfig:
     fields:
       line:
         type: line
       pgconfig:
-        label: Initial configuration
+        label: Initial configuration Overrrides
         type: info
         text: |
           The following settings are just for inital configuration, don't change them unless something is broken.   
+      orfeedurltoggle:
+        width: 1/4
+        label: Override Calendar Feed URL
+        type: toggle
       feedurl:
-        width: 1/2
+        width: 3/4
         label: Calendar Feed URL
         type: url
+        when:
+          orfeedurltoggle: true
       feedflags:
-        width: 1/2
         label: Library Calendar Feed Flags
         type: text
+      orauthurltoggle:
+        width: 1/4
+        label: Override Calendar API URL
+        type: toggle
       authurl:
+        width: 3/4
         label: Calendar API URL
         type: url
+        when:
+          orauthurltoggle: true

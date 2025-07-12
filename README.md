@@ -21,6 +21,7 @@ A Simple and flexible room reservation status display for e-ink or other non-tou
 ## Planned Features
 
 - Per-Room Color or monochrome CSS
+- generated QR Codes
 
 ## Download and Install
 
