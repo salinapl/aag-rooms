@@ -54,6 +54,7 @@ h1 {
 }
 .main{
     max-width:66.6%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -178,7 +179,7 @@ ul.schedule {
     box-sizing: border-box;
 }
 .event-footer {
-    bottom: -15px;
+    bottom: 0px;
     min-height: 0;
     margin:5px;
     padding: 5px;
