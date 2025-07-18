@@ -15,7 +15,7 @@
                 <p class="notice"><?= $page->notice() ?></p>
             <?php endif ?>
             <?php if(count($arrayReady) === 1):  ?>
-                <p class="description"> <?= $page->description() ?></p>
+                <div class="description"> <?= $page->description()->kirbytext() ?></div>
             <?php else: ?>
                 <?php 
                     snippet('timeline') 
