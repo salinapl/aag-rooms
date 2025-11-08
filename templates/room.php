@@ -27,8 +27,15 @@
                 <?= $roomStatus ?>
                  
             </p>
+            <?php if ($page->pgtouch()->bool()): ?>
+            <p>Press to reserve room:
+            <a class="aag-button" href="<?= $page->pgbutton()->url() ?>"> Reserve </a>
+            </p>
+            <?php else: ?>
             <p>Scan QR Code to reserve room:
             <?php if ($file = $page->files()->filterBy('extension', 'svg')->first()): ?>
                 <img src="<?= $file->url() ?>">
+            <?php endif ?>
+            </p>
             <?php endif ?>
         </div>

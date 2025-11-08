@@ -119,6 +119,15 @@ ul.schedule {
     flex:1 1;
     align-self: flex-end;
 }
+.aag-button {
+    display: block;
+    text-decoration: none;
+    margin-top: 15px;
+    padding: 10px;
+    width: 100%;
+    text-align: center;
+    border: #000 3px solid;
+}
 .timeline {
     display: flex;
     position: relative;
