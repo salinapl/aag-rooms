@@ -193,3 +193,10 @@ ul.schedule {
     margin:5px;
     padding: 5px;
 }
+@media only screen and (min-width: 801px) {
+    body {
+        width:100%;
+        max-width:1280px;
+        max-height: 720px;
+    }
+}
