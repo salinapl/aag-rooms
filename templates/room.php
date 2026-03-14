@@ -3,7 +3,12 @@
         <?= css('/media/plugins/salinapl/aag-rooms/fonts/NicoFontPack-v1.0\base\NicoClean\fonts.css') ?>
         <?= css('/media/plugins/salinapl/aag-rooms/fonts/NicoFontPack-v1.0\base\NicoBold\fonts.css') ?>
         <?= css('/media/plugins/salinapl/aag-rooms/fonts/NicoFontPack-v1.0\base\NicoPups\fonts.css') ?>
+        <?= css('/media/plugins/salinapl/aag-rooms/fonts/prompt-master/css/fonts.css') ?>
+        <?= css('/media/plugins/salinapl/aag-rooms/fonts/Merriweather-Sans-master/fonts.css') ?>
         <?= css('/media/plugins/salinapl/aag-rooms/css/template/room.css') ?>
+        <?php if($page->pgcolor()->bool()): ?>
+            <?= css('/media/plugins/salinapl/aag-rooms/css/template/color.css') ?>
+        <?php endif ?>
         <style>
 
         </style>

@@ -1,0 +1,31 @@
+
+body {
+    color: #000;
+    font-family: "Merriweather Sans";
+    font-weight: 400
+
+}
+.font-headline {
+    color: #000;
+    font: 600 48px "Prompt";
+    line-height: 48px;
+}
+.font-large {
+    color: #000;
+    font-family: "Merriweather Sans";
+    font-weight: 700;
+}
+.notice {
+    background-color: #ffc46c;
+    border: none;
+}
+.event {
+    background-color: #00bef2;
+}
+
+
+@media only screen and (min-width: 801px) {
+    body {
+        font-size: 20px;
+    }
+}
