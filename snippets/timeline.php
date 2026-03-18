@@ -85,9 +85,9 @@
             <div class="no-events">No upcoming events</div>
         <?php endif ?>
     </div>
-    <?php if ($upcomingEvents > 0): ?>
-        <div class="event event-footer">
-            +<?= $upcomingEvents ?> Upcoming Event<?php if ($upcomingEvents > 1): ?><?= "s" ?><?php endif ?>
-        </div>
-    <?php endif ?>
 </div>
+<?php if ($upcomingEvents > 0): ?>
+    <div class="event event-footer">
+        +<?= $upcomingEvents ?> Upcoming Event<?php if ($upcomingEvents > 1): ?><?= "s" ?><?php endif ?>
+    </div>
+<?php endif ?>
