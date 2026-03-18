@@ -4,9 +4,7 @@
     $second = date('s', $now);
     $offset = ($minute < 30) ? 0 : 30;
     $timelineStart = strtotime(date('H:', $now) . $offset . ':00');
-    $window = $page->noticetoggle()->bool()
-        ? 3 * 60 * 60;  // Notice disabled, 3 hr window
-        : 3 * 60 * 60;  // Notice disabled, 3 hr window
+    $window = 3 * 60 * 60;  // 3 hr window
 
     // build your slots in 30 min increments:
     $timelineEnd = $timelineStart + $window;
@@ -58,7 +56,7 @@
                     $offsetMins   = max(0, ($actualStart - $timelineStart) / 60);
                     $durationMins = max(0, ($actualEnd   - $actualStart)   / 60);
 
-                    // Convert start/end times to grid rows for css grid (rows 1-10)
+                    // Convert start/end times to grid rows for css grid (rows 1-12)
                     $startRow = floor($offsetMins / 15) + 1;
                     $endRow   = floor(($offsetMins + $durationMins) / 15) + 1;
 
@@ -79,8 +77,7 @@
                     $classAttr = implode(' ', $classes);
 
                 ?>
-                <div class="<?= $classAttr ?>" 
-                    style="--start: <?= $startRow ?>; --end: <?= $endRow ?>;">
+                <div class="<?= $classAttr ?>" style="--start: <?= $startRow ?>; --end: <?= $endRow ?>;">
                     <?= date('g:ia', strtotime($data['start_date'])); ?> - <?= date('g:ia', strtotime($data['end_date'])); ?>: <?= htmlspecialchars($data['title']) ?>
                 </div>
             <?php endforeach ?>
