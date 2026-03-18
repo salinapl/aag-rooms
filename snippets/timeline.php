@@ -5,11 +5,8 @@
     $offset = ($minute < 30) ? 0 : 30;
     $timelineStart = strtotime(date('H:', $now) . $offset . ':00');
     $window = $page->noticetoggle()->bool()
-        ? 2.5 * 60 * 60  // Notice enabled, 2.5 hr window
+        ? 3 * 60 * 60;  // Notice disabled, 3 hr window
         : 3 * 60 * 60;  // Notice disabled, 3 hr window
-    $windowCss = $page->noticetoggle()->bool()
-        ? "twohr-window"  // Notice enabled, 2.5 hr window
-        : "threehr-window";  // Notice disabled, 3 hr window
 
     // build your slots in 30 min increments:
     $timelineEnd = $timelineStart + $window;
@@ -34,11 +31,15 @@
 ?>
 <div class="timeline">
     <div class="time-labels font-large">
+        <?php
+            $timeSlot = 1;
+        ?>
         <?php foreach ($slots as $label): ?>
-        <div><?= $label ?></div>
+        <div class="time" style="--row:<?= $timeSlot ?>;"><?= $label ?></div>
+        <?php $timeSlot += 2; ?>
         <?php endforeach; ?>
     </div>
-    <div class="events-column <?= $windowCss ?>">
+    <div class="events-column">
         <?php if (!empty($arrayReady)): ?>
             <?php foreach($arrayReady as $data): ?>
                 <?php 
@@ -57,10 +58,9 @@
                     $offsetMins   = max(0, ($actualStart - $timelineStart) / 60);
                     $durationMins = max(0, ($actualEnd   - $actualStart)   / 60);
 
-                    // for some reason even x2 doesn't get the labels to line up
-                    // with the font I'm using.
-                    $top = $offsetMins * 2;
-                    $height = $durationMins * 2;
+                    // Convert start/end times to grid rows for css grid (rows 1-10)
+                    $startRow = floor($offsetMins / 15) + 1;
+                    $endRow   = floor(($offsetMins + $durationMins) / 15) + 1;
 
                     // Check if event overflows
                     $isOverflow = ($end > $timelineEnd);
@@ -80,7 +80,7 @@
 
                 ?>
                 <div class="<?= $classAttr ?>" 
-                    style="top: <?= $top ?>px; height: <?= $height ?>px;">
+                    style="--start: <?= $startRow ?>; --end: <?= $endRow ?>;">
                     <?= date('g:ia', strtotime($data['start_date'])); ?> - <?= date('g:ia', strtotime($data['end_date'])); ?>: <?= htmlspecialchars($data['title']) ?>
                 </div>
             <?php endforeach ?>

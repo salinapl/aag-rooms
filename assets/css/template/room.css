@@ -1,4 +1,9 @@
-
+:root {
+    --font-small: 2.5vw;
+    --font-medium: 3vw;
+    --font-large: 3.5vw;
+    --font-headline: 5.5vw;
+}
 html, body { 
     height:100%; 
     background-color: #777; 
@@ -7,9 +12,10 @@ html, body {
     justify-content: center;
 }
 body {
+    padding: 0.5rem;
     color: #000;
     background-color: #fff;
-    font: normal 16px "NicoClean";
+    font: normal var(--font-small) "NicoClean";
     font-smooth: never;
     width:100%;
     max-width:800px;
@@ -21,36 +27,27 @@ body {
 }
 h1 {
     margin-bottom: 0;
-    padding: 5px;
     width:100%;
 }
 .font-headline {
     color: #000;
-    font: bold 48px "NicoClean";
+    font: bold var(--font-headline) "NicoClean";
     font-smooth: never;
 }
 .font-large {
     color: #000;
-    font: normal 26px "BlockKie";
+    font: normal var(--font-large) "BlockKie";
     font-smooth: never;
 }
 .font-medium {
     color: #000;
-    font: bold 32px "NicoClean";
+    font: bold var(--font-medium) "NicoClean";
     font-smooth: never;
 }
 .font-small {
     color: #000;
-    font: normal 16px "NicoPups";
+    font: normal var(--font-small) "NicoPups";
     font-smooth: never;
-}
-.threehr-window {
-    /* Changes height based on the time span, 
-    currently set at 3 hours (6 times 60px, 2px per min) */
-    height: calc(6 * 60px);
-}
-.twohr-window {
-    height: calc(5 * 60px);
 }
 .main{
     max-width:66.6%;
@@ -62,22 +59,26 @@ h1 {
     flex: 2 1;
     max-height:480px;
 }
+.description p, .aag-button, .schedule > li {
+    border-radius: 5px;
+}
 .notice{
     text-align: center;
-    margin:5px;
-    margin-top: -5px;
-    padding: 5px;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
     width:100%;
     border: #000 3px dashed;
 }
 .description {
+    height:100%;
     display:flex;
     align-items: center;
     justify-content: center;
+    flex-direction: center;
 }
-
 .description p {
-    padding: 10px;
+    padding: 1.5rem;
+    border: #000 3px solid;
 }
 ul.schedule {
     padding:0;
@@ -89,7 +90,6 @@ ul.schedule {
 }
 .schedule > li {
     padding: 5px;
-    border-radius: 5px;
     overflow: hidden;
     white-space: nowrap;
     text-wrap: nowrap;
@@ -98,12 +98,10 @@ ul.schedule {
 }
 .schedule > li:nth-child(odd) {
     border: 3px solid #000;
-    border-radius: 5px;
 }
 
 .sidebar {
     flex: 1 1;
-    padding:0 0 10px 5px;
     text-align: center;
     display:flex;
     flex-direction: column;
@@ -119,6 +117,10 @@ ul.schedule {
     flex:1 1;
     align-self: flex-end;
 }
+.sidebar p img {
+    width: 75%;
+    max-width:100%
+}
 .aag-button {
     display: block;
     text-decoration: none;
@@ -128,36 +130,42 @@ ul.schedule {
     text-align: center;
     border: #000 3px solid;
 }
+.timeline-wrapper{
+    display:flex;
+    flex-direction: column;
+    height:100%;
+}
 .timeline {
-    display: flex;
-    position: relative;
-    flex: 1 auto;
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 0.5rem;
+    height:100%;
+}
+.time-labels,
+.events-column {
+    display: grid;
+    grid-template-rows: repeat(11, 1fr); /* 1-10 odds is every half hour */
 }
 .time-labels {
-    min-width: 20%;
+    border-right: 3px solid #000;
+}
+.time {
+    grid-row: var(--row);
+    align-self: center; /* centers text on the row */
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    margin-right: 5px;
+    margin-right: 0.5rem;
 }
-.time-labels div {
-    height: 60px;
-    line-height: 60px;
-}
-.events-column {
-    position: relative;
-    width: 100%;
-    border-left: 3px solid #000;
-    margin-bottom: 20px;
-}
+
 .event {
-    position: absolute;
-    left: 0;
     padding: 6px;
     min-height: 40px;
+    grid-row: var(--start) / var(--end);
+    overflow: hidden;
+    margin-bottom: 0.5rem;
 }
 .event, .event-footer {
-    margin-left: 5px;
     width: 100%;
     border-image: url('/media/plugins/salinapl/aag-rooms/img/border01.svg');
     border-image-width: 8px;
@@ -190,13 +198,21 @@ ul.schedule {
 .event-footer {
     bottom: 0px;
     min-height: 0;
-    margin:5px;
-    padding: 5px;
+    margin: 0.5rem;
+    padding: 0.5rem;
 }
 @media only screen and (min-width: 801px) {
     body {
-        width:100%;
-        max-width:1280px;
-        max-height: 720px;
+        width: 100%;
+        max-width: 100%;
+        max-height: 100%;
+        padding: 2rem;
+    }
+    .main {
+        max-height: 100%;
+        padding-right: 2rem;
+    }
+    .event-footer {
+        padding: 1rem;
     }
 }
