@@ -14,33 +14,49 @@
         </style>
     </head>
     <body>
-        <div class="main">
+        <?php 
+            $roomSign = $roomStatus 
+                ? "Available"
+                : "Occupied";
+            $roomSignclr = $roomStatus
+                ? "--available"
+                : "--occupied";
+        ?>
+        <div class="headline" style="background-color: var(<?= $roomSignclr ?>);">
             <h1 class="font-headline"><?= $page->title() ?></h1>
-            <?php if($page->noticetoggle()->bool()): ?>
-                <p class="notice"><?= $page->notice() ?></p>
-            <?php endif ?>
-            <?php if(count($arrayReady) === 1):  ?>
-                <div class="description"> <?= $page->description()->kirbytext() ?></div>
-            <?php else: ?>
-                <?php 
-                    snippet('timeline') 
-                ?>
-            <?php endif ?>
+            <span class="font-headline">-</span>
+            <div class="room-status font-headline">
+                <?= $roomSign ?>
+            </div>
         </div>
-        <div class="sidebar font-large">
-            <p>
-                <?= $roomStatus ?>
-                 
-            </p>
-            <?php if ($page->pgtouch()->bool()): ?>
-            <p>Press to reserve room:
-            <a class="aag-button" href="<?= $page->pgbutton()->url() ?>"> Reserve </a>
-            </p>
-            <?php else: ?>
-            <p>Scan QR Code to reserve room:
-            <?php if ($file = $page->files()->filterBy('extension', 'svg')->first()): ?>
-                <img src="<?= $file->url() ?>">
-            <?php endif ?>
-            </p>
-            <?php endif ?>
+        <div class ="flex-horz-wrapper">
+            <div class="main">
+                <?php if($page->noticetoggle()->bool()): ?>
+                    <p class="notice"><?= $page->notice() ?></p>
+                <?php endif ?>
+                <?php if(count($arrayReady) === 1):  ?>
+                    <div class="description"> <?= $page->description()->kirbytext() ?></div>
+                <?php else: ?>
+                    <?php 
+                        snippet('timeline') 
+                    ?>
+                <?php endif ?>
+            </div>
+            <div class="sidebar font-large">
+                <p>
+                    <?= $timeText ?>
+                    
+                </p>
+                <?php if ($page->pgtouch()->bool()): ?>
+                <p>Press to reserve room:
+                <a class="aag-button" href="<?= $page->pgbutton()->url() ?>"> Reserve </a>
+                </p>
+                <?php else: ?>
+                <p>Scan QR Code to reserve room:
+                <?php if ($file = $page->files()->filterBy('extension', 'svg')->first()): ?>
+                    <img src="<?= $file->url() ?>">
+                <?php endif ?>
+                </p>
+                <?php endif ?>
+            </div>
         </div>

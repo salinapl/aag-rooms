@@ -1,4 +1,7 @@
-
+:root{
+    --available: #198754;
+    --occupied: #dc3545;
+}
 body {
     color: #000;
     font-family: "Merriweather Sans";

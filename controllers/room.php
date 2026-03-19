@@ -285,7 +285,10 @@ return function($page) {
     if (count($arrayReady) === 1) {
         $only   = $arrayReady[0];
         $closeT = new DateTimeImmutable($only['start_date']);
-        $roomStatus = "Room is currently available; we will be closing at " . $closeT->format('g:ia');
+        // bool to determine if room is occupied or available,
+        // true is available, false is occupied.
+        $roomStatus = true; 
+        $timeText = "we will be closing at " . $closeT->format('g:ia');
     }
     else {
         $gapCalc = findGap($arrayReady);
@@ -293,27 +296,32 @@ return function($page) {
             // Currently occupied?
             if ($gapCalc['isEventOngoing']) {
                 if ($gapCalc['noGap']) {
-                    $roomStatus = "Room is currently occupied, and will be unavailable for the rest of the day";
+                    $roomStatus = false;
+                    $timeText = "The room will be unavailable for the rest of the day";
                 } else {
-                    $roomStatus = "Room is currently occupied, will be available again at "
+                    $roomStatus = false;
+                    $timeText = "The room will be available again at "
                                 . $gapCalc['nextGap'];
                 }
 
             // Currently free
             } else {
-                $roomStatus = "Room is currently available; will be occupied again at "
+                $roomStatus = true;
+                $timeText = "The room will be occupied again at "
                                 . $gapCalc['nextEvent']->format('g:ia');
                 }
 
         } else {
             // no gap at all
-            $roomStatus = "No upcoming events or availability information could be determined.";
+            $roomStatus = false;
+            $timeText = "No upcoming events or availability information could be determined.";
         }
     }  
 
     return [
         'arrayReady' => $arrayReady,
         'roomStatus' => $roomStatus,
+        'timeText' => $timeText
     ];
 };
 
