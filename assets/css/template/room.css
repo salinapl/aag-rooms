@@ -90,7 +90,7 @@ h1 {
     flex-direction: center;
 }
 .description p {
-    padding: 1.5rem;
+    padding: 0.5rem;
     border: #000 3px solid;
 }
 ul.schedule {
@@ -118,22 +118,12 @@ ul.schedule {
     text-align: center;
     display:flex;
     flex-direction: column;
+    justify-content: space-evenly;
     padding: 0 0.5rem;
     height:100%;
 }
-.sidebar > p {
-    flex:1 1;
+.sidebar p {
     margin: 0;
-}
-.sidebar > img {
-    width: 100%;
-    max-width:160px;
-    flex:1 1;
-    align-self: flex-end;
-}
-.sidebar p img {
-    width: 75%;
-    max-width:100%
 }
 .aag-button {
     display: block;
@@ -141,7 +131,19 @@ ul.schedule {
     width: 100%;
     text-align: center;
     border: #000 3px solid;
-    font-size: var(--font-headline)
+    font-size: var(--font-headline);
+}
+.aag-qr {
+    display:block;
+    width: 100%;
+    text-align: center;
+}
+.aag-qr p {
+    margin: 0;
+}
+.aag-qr img {
+    min-width: 130px;
+    width:50%;
 }
 .timeline-wrapper{
     display:flex;
@@ -236,6 +238,9 @@ ul.schedule {
     .event-footer {
         padding: 1rem;
         margin-left: 2rem;
+    }
+    .description p {
+        padding: 2rem; 
     }
     .sidebar {
         padding: 0 2rem;

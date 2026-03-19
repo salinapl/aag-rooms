@@ -29,34 +29,39 @@
                 <?= $roomSign ?>
             </div>
         </div>
+        <?php if($page->noticetoggle()->bool()): ?>
+            <p class="notice"><?= $page->notice() ?></p>
+        <?php endif ?>
         <div class ="flex-horz-wrapper">
+        <?php if(count($arrayReady) === 1):  ?>
+
+        <?php else: ?>
             <div class="main">
-                <?php if($page->noticetoggle()->bool()): ?>
-                    <p class="notice"><?= $page->notice() ?></p>
-                <?php endif ?>
-                <?php if(count($arrayReady) === 1):  ?>
-                    <div class="description"> <?= $page->description()->kirbytext() ?></div>
-                <?php else: ?>
                     <?php 
                         snippet('timeline') 
                     ?>
-                <?php endif ?>
             </div>
+        <?php endif ?>
             <div class="sidebar font-large">
                 <p>
                     <?= $timeText ?>
                     
                 </p>
+                <div class="description"> <?= $page->description()->kirbytext() ?></div>
                 <?php if ($page->pgtouch()->bool()): ?>
-                <p>Press to reserve room:
-                <a class="aag-button" href="<?= $page->pgbutton()->url() ?>"> Reserve </a>
-                </p>
+                    <p>Press to reserve room:
+                    <a class="aag-button" href="<?= $page->pgbutton()->url() ?>"> Reserve </a>
+                    </p>
                 <?php else: ?>
-                <p>Scan QR Code to reserve room:
-                <?php if ($file = $page->files()->filterBy('extension', 'svg')->first()): ?>
-                    <img src="<?= $file->url() ?>">
-                <?php endif ?>
-                </p>
+                    <div class ="aag-qr">
+                        <p>Scan QR Code to reserve room:</p>
+                    <?php if ($file = $page->files()->filterBy('extension', 'svg')->first()): ?>
+                        <img src="<?= $file->url() ?>">
+                    <?php endif ?>
+                    </div>
                 <?php endif ?>
             </div>
         </div>
+        <?php if ($page->pgtouch()->bool()): ?>
+            <?= js('/media/plugins/salinapl/aag-rooms/js/reservation-times.js') ?>
+        <?php endif ?>

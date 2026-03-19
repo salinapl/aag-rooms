@@ -7,8 +7,46 @@
    viewBox="0 0 6.3500001 6.3500001"
    version="1.1"
    id="svg1"
+   sodipodi:docname="border03.svg"
+   inkscape:version="1.4.3 (0d15f75, 2025-12-25)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="true"
+     inkscape:zoom="8.40625"
+     inkscape:cx="15.94052"
+     inkscape:cy="9.6951673"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1">
+    <inkscape:grid
+       id="grid1"
+       units="px"
+       originx="0"
+       originy="0"
+       spacingx="0.26458334"
+       spacingy="0.26458334"
+       empcolor="#0099e5"
+       empopacity="0.30196078"
+       color="#0099e5"
+       opacity="0.14901961"
+       empspacing="5"
+       enabled="true"
+       visible="true" />
+  </sodipodi:namedview>
   <defs
      id="defs1" />
   <g
@@ -16,6 +54,7 @@
     <path
        id="rect1"
        style="fill:#000000;stroke-width:2.49902;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke fill markers"
-       d="M 0.52916668,0 V 0.26458334 H 0.26458334 V 0.52916668 H 0 V 5.2916668 H 0.26458334 V 5.5562501 H 0.52916668 V 5.8208334 H 0.79375001 V 6.0854168 H 1.3229167 V 5.8208334 H 1.5875 V 5.5562501 H 1.8520834 V 5.2916668 H 2.1166667 V 5.8208334 6.0854168 H 2.38125 V 5.8208334 H 2.6458334 V 5.5562501 H 2.9104167 V 5.2916668 h 0.5291667 v 0.2645833 h 0.2645833 v 0.2645833 h 0.2645834 v 0.2645834 h 0.2645833 v -0.79375 H 4.4979167 V 5.5562501 H 4.7625001 V 5.8208334 H 5.0270834 V 6.0854168 H 5.5562501 V 5.8208334 H 5.8208334 V 5.5562501 H 6.0854168 V 5.2916668 H 6.3500001 V 0.52916668 H 6.0854168 V 0.26458334 H 5.8208334 V 0 H 5.5562501 1.3229167 Z M 1.3229167,0.79375001 H 5.0270834 V 1.0583334 H 5.2916668 V 1.3229167 H 5.5562501 V 5.0270834 H 5.0270834 V 4.7625001 H 4.7625001 V 4.4979167 H 4.4979167 V 4.2333334 H 4.2333334 v 0.79375 H 3.9687501 V 4.7625001 H 3.7041667 V 4.4979167 H 3.4395834 V 4.2333334 H 2.9104167 V 4.4979167 H 2.6458334 V 4.7625001 H 2.38125 V 5.0270834 H 2.1166667 V 4.4979167 4.2333334 H 1.8520834 V 4.4979167 H 1.5875 V 4.7625001 H 1.3229167 V 5.0270834 H 0.79375001 V 1.3229167 H 1.0583334 V 1.0583334 h 0.2645833 z" />
+       d="m 0.79375005,0.26458335 -0.26458337,-10e-9 2e-8,0.26458336 -0.26458336,-2e-8 10e-9,0.26458337 H 0 V 5.2916668 H 0.26458334 V 5.5562501 H 0.52916668 V 5.8208334 H 0.79375001 V 6.0854168 H 1.3229167 V 5.8208334 H 1.5875 V 5.5562501 H 1.8520834 V 5.2916668 H 2.1166667 V 5.8208334 6.0854168 H 2.38125 V 5.8208334 H 2.6458334 V 5.5562501 H 2.9104167 V 5.2916668 h 0.5291667 v 0.2645833 h 0.2645833 v 0.2645833 h 0.2645834 v 0.2645834 h 0.2645833 v -0.79375 H 4.4979167 V 5.5562501 H 4.7625001 V 5.8208334 H 5.0270834 V 6.0854168 H 5.5562501 V 5.8208334 H 5.8208334 V 5.5562501 H 6.0854168 V 5.2916668 h 0.2645833 l 3e-7,-4.49791675 H 6.085417 l -2e-7,-0.26458337 -0.2645831,2e-8 -3e-7,-0.26458336 -0.2645831,10e-9 L 5.5562501,0 H 0.79375005 Z M 1.3229167,0.79375001 h 3.7041667 l 0.2645836,4e-8 -2e-7,0.26458335 0.2645835,0 -2e-7,0.2645833 V 5.0270834 H 5.0270834 V 4.7625001 H 4.7625001 V 4.4979167 H 4.4979167 V 4.2333334 H 4.2333334 v 0.79375 H 3.9687501 V 4.7625001 H 3.7041667 V 4.4979167 H 3.4395834 V 4.2333334 H 2.9104167 V 4.4979167 H 2.6458334 V 4.7625001 H 2.38125 V 5.0270834 H 2.1166667 V 4.4979167 4.2333334 H 1.8520834 V 4.4979167 H 1.5875 V 4.7625001 H 1.3229167 V 5.0270834 H 0.79375001 V 1.3229167 l 4e-8,-0.2645833 0.26458335,0 0,-0.26458335 z"
+       sodipodi:nodetypes="cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc" />
   </g>
 </svg>
