@@ -3,6 +3,8 @@
     --font-medium: 3vw;
     --font-large: 2vw;
     --font-headline: 5.5vw;
+    --font-main: "Merriweather Sans";
+    --font-title: "Prompt";
 }
 html, body { 
     height:100%; 
@@ -14,7 +16,7 @@ html, body {
 body {
     color: #000;
     background-color: #fff;
-    font: normal var(--font-small) "NicoClean";
+    font: 400 var(--font-small) var(--font-main);
     font-smooth: never;
     width:100%;
     min-width:800px;
@@ -30,18 +32,18 @@ h1 {
 }
 .font-headline {
     color: #000;
-    font: bold var(--font-headline) "NicoClean";
+    font: 600 var(--font-headline) var(--font-title);
     font-smooth: never;
 }
 .font-large {
     color: #000;
-    font: normal var(--font-large) "BlockKie";
+    font: 700 var(--font-large) var(--font-main);
     font-smooth: never;
 }
 .font-medium {
     color: #000;
-    font: bold var(--font-medium) "NicoClean";
-    font-smooth: never;
+    font-family: "Merriweather Sans";
+    font-weight: 400
 }
 .font-small {
     color: #000;
@@ -80,7 +82,8 @@ h1 {
     margin-bottom: 0.5rem;
     padding: 0.5rem;
     width:100%;
-    border: #000 3px dashed;
+    border-top: #000 3px dashed;
+    border-bottom: #000 3px dashed;
 }
 .description {
     height:100%;
@@ -143,6 +146,7 @@ ul.schedule {
 }
 .aag-qr img {
     min-width: 130px;
+    max-width: 250px;
     width:50%;
 }
 .timeline-wrapper{
@@ -181,21 +185,21 @@ ul.schedule {
     margin-bottom: 0.5rem;
 }
 .event, .event-footer {
-    border-image: url('/media/plugins/salinapl/aag-rooms/img/border01.svg');
+    border-image: url('/media/plugins/salinapl/aag-rooms/img/border-smooth01.svg');
     border-image-width: 8px;
     border-image-slice: 8;
     box-sizing: border-box;
 }
 .underflow {
     padding-top: 8px;
-    border-image: url('/media/plugins/salinapl/aag-rooms/img/border02.svg');
+    border-image: url('/media/plugins/salinapl/aag-rooms/img/border-smooth02.svg');
     border-image-width: 8px;
     border-image-slice: 8;
     border-image-repeat: repeat;
     box-sizing: border-box;
 }
 .overflow {
-    border-image: url('/media/plugins/salinapl/aag-rooms/img/border03.svg');
+    border-image: url('/media/plugins/salinapl/aag-rooms/img/border-smooth03.svg');
     border-image-width: 8px;
     border-image-slice: 8;
     border-image-repeat: repeat;
@@ -203,7 +207,7 @@ ul.schedule {
 }
 .underflow.overflow {
     padding-top: 8px;
-    border-image: url('/media/plugins/salinapl/aag-rooms/img/border04.svg');
+    border-image: url('/media/plugins/salinapl/aag-rooms/img/border-smooth04.svg');
     border-image-width: 8px;
     border-image-slice: 8;
     border-image-repeat: repeat;

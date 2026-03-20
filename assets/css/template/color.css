@@ -2,22 +2,6 @@
     --available: #198754;
     --occupied: #dc3545;
 }
-body {
-    color: #000;
-    font-family: "Merriweather Sans";
-    font-weight: 400
-
-}
-.font-headline {
-    color: #000;
-    font: 600 5.5vw "Prompt";
-    line-height: 5.5vw;
-}
-.font-large {
-    color: #000;
-    font-family: "Merriweather Sans";
-    font-weight: 700;
-}
 .notice {
     background-color: #ffc46c;
     border: none;

@@ -50,7 +50,13 @@
                 <div class="description"> <?= $page->description()->kirbytext() ?></div>
                 <?php if ($page->pgtouch()->bool()): ?>
                     <p>Press to reserve room:
-                    <a class="aag-button" href="javascript:void(0)" onclick="scheduleDoc('<?= $page->pgbutton()->url() ?>')"> Reserve </a>
+                        <a class="aag-button" href="<?= url('reserve', [
+                            'query' => [
+                                'url' => $page->pgbutton()->value()
+                            ]
+                        ]) ?>"> 
+                            Reserve 
+                        </a>
                     </p>
                 <?php else: ?>
                     <div class ="aag-qr">
