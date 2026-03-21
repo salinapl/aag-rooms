@@ -8,4 +8,31 @@
 }
 .event {
     background-color: #00bef2;
+    border-radius: 5px;
+}
+.underflow {
+    padding-top: 8px;
+    border-image: url('/media/plugins/salinapl/aag-rooms/img/border-mask04.svg');
+    border-image-width: 8px 0 0 0;
+    border-image-slice: 8;
+    border-image-repeat: repeat;
+    border-radius: 0 0 5px 5px;
+    box-sizing: border-box;
+}
+.overflow {
+    border-image: url('/media/plugins/salinapl/aag-rooms/img/border-mask04.svg');
+    border-image-width: 0 0 8px 0;
+    border-image-slice: 8;
+    border-image-repeat: repeat;
+    border-radius: 5px 5px 0 0;
+    box-sizing: border-box;
+}
+.underflow.overflow {
+    padding-top: 8px;
+    border-image: url('/media/plugins/salinapl/aag-rooms/img/border-mask04.svg');
+    border-image-width: 8px 0 8px 0;
+    border-image-slice: 8;
+    border-image-repeat: repeat;
+    border-radius: 0px;
+    box-sizing: border-box;
 }

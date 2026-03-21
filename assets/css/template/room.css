@@ -1,53 +1,47 @@
 :root {
-    --font-small: 2vw;
-    --font-medium: 3vw;
-    --font-large: 2vw;
-    --font-headline: 5.5vw;
-    --font-main: "Merriweather Sans";
-    --font-title: "Prompt";
+    --font-color: #000;
+    --border-color: #000;
+    --primary-bg: #fff;
+    --secondary-bg: #777;
 }
 html, body { 
     height:100%; 
-    background-color: #777; 
+    background-color: var(--secondary-bg);
     display:flex; 
     align-items: center;
     justify-content: center;
 }
 body {
-    color: #000;
-    background-color: #fff;
-    font: 400 var(--font-small) var(--font-main);
-    font-smooth: never;
-    width:100%;
+    background-color: var(--primary-bg);
+    width: 100%;
     min-width:800px;
     min-height: 480px;
     padding-bottom: 0.5rem;
     display:flex;
     flex-direction: column;
     align-items: flex-start;
-    overflow:hidden;
 }
 h1 {
     margin-bottom: 0;
 }
 .font-headline {
-    color: #000;
-    font: 600 var(--font-headline) var(--font-title);
+    color: var(--font-color);
+    font: 600 5.5vw "Prompt";
     font-smooth: never;
 }
 .font-large {
-    color: #000;
-    font: 700 var(--font-large) var(--font-main);
+    color: var(--font-color);
+    font: 700 2vw "Merriweather Sans";
     font-smooth: never;
 }
 .font-medium {
-    color: #000;
+    color: var(--font-color);
     font-family: "Merriweather Sans";
     font-weight: 400
 }
 .font-small {
-    color: #000;
-    font: normal var(--font-small) "NicoPups";
+    color: var(--font-color);
+    font: 400 2vw "Merriweather Sans";
     font-smooth: never;
 }
 .headline {
@@ -82,8 +76,8 @@ h1 {
     margin-bottom: 0.5rem;
     padding: 0.5rem;
     width:100%;
-    border-top: #000 3px dashed;
-    border-bottom: #000 3px dashed;
+    border-top: var(--border-color) 3px dashed;
+    border-bottom: var(--border-color) 3px dashed;
 }
 .description {
     height:100%;
@@ -94,7 +88,7 @@ h1 {
 }
 .description p {
     padding: 0.5rem;
-    border: #000 3px solid;
+    border: var(--border-color) 3px solid;
 }
 ul.schedule {
     padding:0;
@@ -113,9 +107,8 @@ ul.schedule {
 
 }
 .schedule > li:nth-child(odd) {
-    border: 3px solid #000;
+    border: 3px solid var(--border-color);
 }
-
 .sidebar {
     flex: 1 1;
     text-align: center;
@@ -124,6 +117,8 @@ ul.schedule {
     justify-content: space-evenly;
     padding: 0 0.5rem;
     height:100%;
+    container-name: sidebar;
+    container-type: inline-size;
 }
 .sidebar p {
     margin: 0;
@@ -134,7 +129,6 @@ ul.schedule {
     width: 100%;
     text-align: center;
     border: #000 3px solid;
-    font-size: var(--font-headline);
 }
 .aag-qr {
     display:block;
@@ -166,7 +160,7 @@ ul.schedule {
     grid-template-rows: repeat(10, 1fr); /* 1-10 odds is every half hour */
 }
 .time-labels {
-    border-right: 3px solid #000;
+    border-right: 3px solid var(--border-color);
     padding-left: 0.5rem;
 }
 .time {
@@ -177,7 +171,6 @@ ul.schedule {
     align-items: flex-end;
     margin-right: 0.5rem;
 }
-
 .event {
     padding: 0.5rem;
     grid-row: var(--start) / var(--end);
@@ -219,7 +212,20 @@ ul.schedule {
     margin: 0.5rem;
     padding: 0.5rem;
 }
-@media only screen and (min-width: 801px) {
+@container sidebar (width < 500px) {
+    .aag-qr img {
+        width:130px;
+    }
+}
+@container sidebar (width > 500px) {
+    .description p {
+            padding: 2rem; 
+    }
+    .sidebar {
+        padding: 0 2rem;
+    }
+}
+@media only screen and (min-width: 1281px) {
     body {
         padding-bottom: 2rem;
     }
@@ -238,11 +244,5 @@ ul.schedule {
     .event-footer {
         padding: 1rem;
         margin-left: 2rem;
-    }
-    .description p {
-        padding: 2rem; 
-    }
-    .sidebar {
-        padding: 0 2rem;
     }
 }

@@ -13,7 +13,7 @@
 
         </style>
     </head>
-    <body>
+    <body class="font-small">
         <?php 
             $roomSign = $roomStatus 
                 ? "Available"
@@ -30,7 +30,7 @@
             </div>
         </div>
         <?php if($page->noticetoggle()->bool()): ?>
-            <p class="notice"><?= $page->notice() ?></p>
+            <p class="notice font-large"><?= $page->notice() ?></p>
         <?php endif ?>
         <div class ="flex-horz-wrapper">
         <?php if(count($arrayReady) === 1):  ?>
@@ -42,7 +42,7 @@
                     ?>
             </div>
         <?php endif ?>
-            <div class="sidebar font-large">
+            <div class="sidebar font-small">
                 <p>
                     <?= $timeText ?>
                     
@@ -50,7 +50,7 @@
                 <div class="description"> <?= $page->description()->kirbytext() ?></div>
                 <?php if ($page->pgtouch()->bool()): ?>
                     <p>Press to reserve room:
-                        <a class="aag-button" href="<?= url('reserve', [
+                        <a class="aag-button font-headline" href="<?= url('reserve', [
                             'query' => [
                                 'url' => $page->pgbutton()->value()
                             ]
