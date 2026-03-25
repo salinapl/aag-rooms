@@ -31,8 +31,8 @@
     <div class="time-labels font-large">
         <?php
             $timeSlot = 1;
+            foreach ($slots as $label): 
         ?>
-        <?php foreach ($slots as $label): ?>
         <div class="time" style="--row:<?= $timeSlot ?>;"><?= $label ?></div>
         <?php $timeSlot += 2; ?>
         <?php endforeach; ?>

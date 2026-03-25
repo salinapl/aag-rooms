@@ -6,9 +6,11 @@
         <?= css('/media/plugins/salinapl/aag-rooms/fonts/prompt-master/css/fonts.css') ?>
         <?= css('/media/plugins/salinapl/aag-rooms/fonts/Merriweather-Sans-master/fonts.css') ?>
         <?= css('/media/plugins/salinapl/aag-rooms/css/template/room.css') ?>
-        <?php if($page->pgcolor()->bool()): ?>
-            <?= css('/media/plugins/salinapl/aag-rooms/css/template/color.css') ?>
-        <?php endif ?>
+        <?= 
+            $page->pgcolor()->bool()
+            ? css('/media/plugins/salinapl/aag-rooms/css/template/color.css')
+            : css('/media/plugins/salinapl/aag-rooms/css/template/2bit.css');
+        ?>
         <style>
 
         </style>

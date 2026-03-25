@@ -9,6 +9,7 @@
 .event {
     background-color: #00bef2;
     border-radius: 5px;
+    border-image: none;
 }
 .underflow {
     padding-top: 8px;
