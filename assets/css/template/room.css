@@ -174,7 +174,7 @@ ul.schedule {
 }
 @container sidebar (width > 500px) {
     .description p {
-            padding: 2rem; 
+            padding: 0.5rem 2rem; 
     }
     .sidebar {
         padding: 0 2rem;
@@ -188,7 +188,7 @@ ul.schedule {
         padding: 0 2rem;
     }
     .notice {
-        padding: 0 2rem;
+        padding: 0.5rem 2rem;
     }
     .main {
         max-height: 100%;
