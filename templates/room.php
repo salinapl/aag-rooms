@@ -63,9 +63,7 @@
                 <?php else: ?>
                     <div class ="aag-qr">
                         <p>Scan QR Code to reserve room:</p>
-                    <?php if ($file = $page->files()->filterBy('extension', 'svg')->first()): ?>
-                        <img src="<?= $file->url() ?>">
-                    <?php endif ?>
+                        <?= qr($page->pgbutton()->url())->toSvg(130, '#000', '#fff', 1) ?>
                     </div>
                 <?php endif ?>
             </div>

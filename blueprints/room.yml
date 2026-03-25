@@ -56,18 +56,8 @@ columns:
           - "touch interactive"
       pgbutton:
         width: 2/2
-        label: Interactive Reservation link
+        label: Reservation link (QR/Button)
         type: url
-        when:
-          pgtouch: true
-      qr_image:
-        width: 2/2
-        type: files
-        query: page.images
-        multiple: false
-        label: Room QR Code
-        when:
-          pgtouch: false
       description:
         width: 2/2
         label: Room Description
