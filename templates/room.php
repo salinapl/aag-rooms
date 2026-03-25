@@ -1,8 +1,4 @@
 <?php snippet('header-rooms') ?>
-        <?= css('/media/plugins/salinapl/aag-rooms/fonts/BlockKie-v1.0\fonts.css') ?>
-        <?= css('/media/plugins/salinapl/aag-rooms/fonts/NicoFontPack-v1.0\base\NicoClean\fonts.css') ?>
-        <?= css('/media/plugins/salinapl/aag-rooms/fonts/NicoFontPack-v1.0\base\NicoBold\fonts.css') ?>
-        <?= css('/media/plugins/salinapl/aag-rooms/fonts/NicoFontPack-v1.0\base\NicoPups\fonts.css') ?>
         <?= css('/media/plugins/salinapl/aag-rooms/fonts/prompt-master/css/fonts.css') ?>
         <?= css('/media/plugins/salinapl/aag-rooms/fonts/Merriweather-Sans-master/fonts.css') ?>
         <?= css('/media/plugins/salinapl/aag-rooms/css/template/room.css') ?>

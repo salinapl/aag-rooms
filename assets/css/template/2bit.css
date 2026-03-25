@@ -1,4 +1,10 @@
-.event {
+:root{
+    --white: #fff;
+    --light-grey: #aaa;
+    --dark-grey: #555;
+    --black: #000;
+}
+.event, .notice, .description p {
     background-color: var(--light-grey);
 }
 .events-column .event:first-child {
@@ -58,8 +64,4 @@
     border-image-slice: 8;
     border-image-repeat: repeat;
     box-sizing: border-box;
-}
-.description p {
-    border: none;
-    background-color: var(--light-grey);
 }

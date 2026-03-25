@@ -50,7 +50,7 @@ h1 {
     flex-direction: row;
     width:100%;
     justify-content: space-between;
-    padding: 0.5rem;
+    padding: 0 0.5rem;
 }
 .flex-horz-wrapper {
     flex-direction: row;
@@ -74,8 +74,6 @@ h1 {
     margin-bottom: 0.5rem;
     padding: 0.5rem;
     width:100%;
-    border-top: var(--black) 3px dashed;
-    border-bottom: var(--black) 3px dashed;
 }
 .description {
     height:100%;
@@ -85,7 +83,6 @@ h1 {
 }
 .description p {
     padding: 0.5rem;
-    border: var(--black) 3px solid;
 }
 ul.schedule {
     padding:0;
@@ -188,7 +185,7 @@ ul.schedule {
         padding-bottom: 2rem;
     }
     .headline {
-        padding: 2rem;
+        padding: 0 2rem;
     }
     .notice {
         padding: 0 2rem;

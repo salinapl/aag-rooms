@@ -1,13 +1,15 @@
 :root{
     --available: #198754;
     --occupied: #dc3545;
+    --spl-blue: #00bef2;
+    --spl-yellow: #ffc46c;
 }
-.notice {
-    background-color: #ffc46c;
+.notice, .description p {
+    background-color: var(--spl-yellow);
     border: none;
 }
 .event {
-    background-color: #00bef2;
+    background-color: var(--spl-blue);
     border-radius: 5px;
     border-image: none;
 }
