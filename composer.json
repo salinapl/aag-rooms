@@ -1,7 +1,7 @@
 {
     "name": "salinapl/aag-rooms",
     "description": "A Simple and flexible room reservation status display for e-paper or other non-touch displays.",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "license": "MIT",
     "authors": [
         {
