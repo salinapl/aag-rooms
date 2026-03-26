@@ -41,18 +41,107 @@ columns:
   settings:
     fields:
       pgcolor:
-        width: 1/2
-        label: Page Style Monochrome / Color
+        width: 1/4
+        label: Page Style 4 Shade Black & White / Color
         type: toggle
         text:
-          - "monochrome"
+          - "4 Shade Black & White"
           - "color"
-      qr_image:
+      aagprimary:
+        width: 1/4
+        label: Primary Color
+        type: color
+        options: 
+          type: query
+          query: kirby.option('salinapl.aag-rooms.colors')
+        when:
+          pgcolor: true
+      aagsecondary:
+        width: 1/4
+        label: Secondary Color
+        type: color
+        options: 
+          type: query
+          query: kirby.option('salinapl.aag-rooms.colors')
+        when:
+          pgcolor: true
+      aagstatus:
+        width: 1/4
+        label: Status Color
+        type: color
+        options: 
+          type: query
+          query: kirby.option('salinapl.aag-rooms.colors')
+        when:
+          pgcolor: true
+      emptycolor:
+        width: 1/4
+        type: gap
+        when:
+          pgcolor: true
+      aagprimaryfont:
+        width: 1/4
+        label: Primary Font Color
+        type: color
+        options: 
+          type: query
+          query: kirby.option('salinapl.aag-rooms.colors')
+        when:
+          pgcolor: true
+      aagsecondaryfont:
+        width: 1/4
+        label: Secondary Font Color
+        type: color
+        options: 
+          type: query
+          query: kirby.option('salinapl.aag-rooms.colors')
+        when:
+          pgcolor: true
+      aagstatusfont:
+        width: 1/4
+        label: Status Font Color
+        type: color
+        options: 
+          type: query
+          query: kirby.option('salinapl.aag-rooms.colors')
+        when:
+          pgcolor: true
+      pgtouch:
+        width: 1/4
+        label: Reservation Mode Toggle
+        type: toggle
+        text:
+          - "QR Code"
+          - "Button"
+      pgbutton:
+        width: 3/4
+        label: Reservation link (QR/Button)
+        type: url
+      pgbutton:
+        label: 
+        type: info
+        text: |
+          Button Color only applies when set to color mode.
+        when:
+          pgtouch: true
+      aagbuttonfont:
         width: 1/2
-        type: files
-        query: page.images
-        multiple: false
-        label: Room QR Code
+        label: Button Font Color
+        type: color
+        options: 
+          type: query
+          query: kirby.option('salinapl.aag-rooms.colors')
+        when:
+          pgtouch: true
+      aagbuttonbg:
+        width: 1/2
+        label: Button Color
+        type: color
+        options: 
+          type: query
+          query: kirby.option('salinapl.aag-rooms.colors')
+        when:
+          pgtouch: true
       description:
         width: 2/2
         label: Room Description

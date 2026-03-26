@@ -1,0 +1,50 @@
+:root{
+    --available: #198754;
+    --occupied: #dc3545;
+}
+.notice, .description p {
+    background-color: var(--status);
+    color: var(--fontstatus);
+    border: none;
+}
+.event {
+    color: var(--fontsecondary);
+    background-color: var(--secondary);
+    border-radius: 5px;
+    border-image: none;
+}
+.events-column .event:first-child {
+    color: var(--fontprimary);
+    background-color: var(--primary);
+}
+.underflow {
+    padding-top: 8px;
+    border-image: url('/media/plugins/salinapl/aag-rooms/img/border-mask04.svg');
+    border-image-width: 8px 0 0 0;
+    border-image-slice: 8;
+    border-image-repeat: repeat;
+    border-radius: 0 0 5px 5px;
+    box-sizing: border-box;
+}
+.overflow {
+    border-image: url('/media/plugins/salinapl/aag-rooms/img/border-mask04.svg');
+    border-image-width: 0 0 8px 0;
+    border-image-slice: 8;
+    border-image-repeat: repeat;
+    border-radius: 5px 5px 0 0;
+    box-sizing: border-box;
+}
+.underflow.overflow {
+    padding-top: 8px;
+    border-image: url('/media/plugins/salinapl/aag-rooms/img/border-mask04.svg');
+    border-image-width: 8px 0 8px 0;
+    border-image-slice: 8;
+    border-image-repeat: repeat;
+    border-radius: 0px;
+    box-sizing: border-box;
+}
+.aag-button {
+    color: var(--fontbutton);
+    background-color: var(--buttonbg);
+    border: none;
+}

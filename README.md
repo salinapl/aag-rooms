@@ -1,7 +1,7 @@
 # aag-rooms - At-A-Glance Library Room Reservation status display using Kirby
 A Simple and flexible room reservation status display for e-ink or other non-touch displays using [Kirby](https://getkirby.com)
 
-<img src="https://github.com/salinapl/aag-rooms/blob/main/.github/images/example.png?raw=true" width="45%"></img> <img src="https://github.com/salinapl/aag-rooms/blob/main/.github/images/photo1.jpg?raw=true" width="45%"></img> 
+<img src="https://github.com/salinapl/aag-rooms/blob/main/.github/images/example.png?raw=true" width="19%"></img> <img src="https://github.com/salinapl/aag-rooms/blob/main/.github/images/photo1.jpg?raw=true" width="19%"></img> <img src="https://github.com/salinapl/aag-rooms/blob/main/.github/images/example02.png?raw=true" width="19%"></img> <img src="https://github.com/salinapl/aag-rooms/blob/main/.github/images/example03.png?raw=true" width="19%"></img> <img src="https://github.com/salinapl/aag-rooms/blob/main/.github/images/example04.png?raw=true" width="19%"></img>
 
 
 ## Features
@@ -9,19 +9,19 @@ A Simple and flexible room reservation status display for e-ink or other non-tou
 
 - Closing Hour Override per-room
 - Per-room toggleable notice text display
-- Per-room QR code display (must be generated elsewhere and uploaded to interface at this time)
+- Per-room QR code display dynamically generated through KirbyCMS
 - Per-Room description that displays when no upcoming events in timeline
 - Ships with integration of LibraryMarket's LibraryCalendar App
 - Can use any event calendar app that has JSON event API with some tweaking
 - Timeline of upcoming events, hides private event titles but keeps event ID for refrence
 - Overflowed events past timeline window are shown at bottom
 - Alternative schedule view that shows all events for the day in a static schedule
-- Ships with e-ink friendly fonts and CSS configs, designed to work on a [TRMNL](https://usetrmnl.com/) device 800x480 screens.
-
-## Planned Features
-
-- Per-Room Color or monochrome CSS
-- generated QR Codes
+- Per-Room Color or 2-bit grayscale CSS
+- Color picking for color settings for various elements
+- Touchscreen option that replaces QR code with reservation button
+- Dynamic page scaling tested to work down to **480x360**
+- Ships with e-paper friendly fonts and CSS configs
+- Originally designed to work on a [TRMNL](https://usetrmnl.com/) device.
 
 ## Download and Install
 
@@ -61,8 +61,8 @@ Kirby 5 is now fully supported, Kirby 4 has only been tested up to v4.8.0
 While aag-rooms is provided free under the MIT License, other things in this repository are licensed differently.
 
 ### Fonts
-- [NicoFonts](https://emhuo.itch.io/nico-pixel-fonts-pack) is licensed under the [SIL OPEN FONT LICENSE Version 1.1](https://openfontlicense.org/documents/OFL.txt)
-- [BlockKie by JoohnFonts](https://fontstruct.com/fontstructors/1669437/joohnfonts) is licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
+- [Merriweather Sans by SorkinType](https://github.com/SorkinType/Merriweather-Sans) is licensed under the [SIL OPEN FONT LICENSE Version 1.1](https://openfontlicense.org/documents/OFL.txt)
+- [Prompt by Cadson Demak ](https://github.com/cadsondemak/prompt) is licensed under the [SIL OPEN FONT LICENSE Version 1.1](https://openfontlicense.org/documents/OFL.txt)
 
 ### Kirby
 You can try Kirby on your local machine or on a test
