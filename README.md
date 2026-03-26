@@ -1,7 +1,7 @@
 # aag-rooms - At-A-Glance Library Room Reservation status display using Kirby
 A Simple and flexible room reservation status display for e-ink or other non-touch displays using [Kirby](https://getkirby.com)
 
-<img src="https://github.com/salinapl/aag-rooms/blob/main/.github/images/example.png?raw=true" width="19%"></img> <img src="https://github.com/salinapl/aag-rooms/blob/main/.github/images/photo1.jpg?raw=true" width="19%"></img> <img src="https://github.com/salinapl/aag-rooms/blob/main/.github/images/example02.png?raw=true" width="19%"></img> <img src="https://github.com/salinapl/aag-rooms/blob/main/.github/images/example03.png?raw=true" width="19%"></img> <img src="https://github.com/salinapl/aag-rooms/blob/main/.github/images/example04.png?raw=true" width="19%"></img>
+<img src="https://github.com/salinapl/aag-rooms/blob/main/.github/images/example.png" width="19%"></img> <img src="https://github.com/salinapl/aag-rooms/blob/main/.github/images/photo1.jpg" width="19%"></img> <img src="https://github.com/salinapl/aag-rooms/blob/main/.github/images/example02.png" width="19%"></img> <img src="https://github.com/salinapl/aag-rooms/blob/main/.github/images/example03.png" width="19%"></img> <img src="https://github.com/salinapl/aag-rooms/blob/main/.github/images/example04.png" width="19%"></img>
 
 
 ## Features
