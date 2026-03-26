@@ -1,17 +1,21 @@
 :root{
     --available: #198754;
     --occupied: #dc3545;
-    --spl-blue: #00bef2;
-    --spl-yellow: #ffc46c;
 }
 .notice, .description p {
-    background-color: var(--spl-yellow);
+    background-color: var(--status);
+    color: var(--fontstatus);
     border: none;
 }
 .event {
-    background-color: var(--spl-blue);
+    color: var(--fontsecondary);
+    background-color: var(--secondary);
     border-radius: 5px;
     border-image: none;
+}
+.events-column .event:first-child {
+    color: var(--fontprimary);
+    background-color: var(--primary);
 }
 .underflow {
     padding-top: 8px;

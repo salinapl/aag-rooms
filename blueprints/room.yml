@@ -41,21 +41,85 @@ columns:
   settings:
     fields:
       pgcolor:
-        width: 1/2
+        width: 1/4
         label: Page Style Monochrome / Color
         type: toggle
         text:
           - "monochrome"
           - "color"
+      emptycolor:
+        width: 3/4
+        type: gap
+        when:
+          pgcolor: false
+      aagprimary:
+        width: 1/4
+        label: Primary Color
+        type: color
+        options: 
+          type: query
+          query: kirby.option('salinapl.aag-rooms.colors')
+        when:
+          pgcolor: true
+      aagsecondary:
+        width: 1/4
+        label: Secondary Color
+        type: color
+        options: 
+          type: query
+          query: kirby.option('salinapl.aag-rooms.colors')
+        when:
+          pgcolor: true
+      aagstatus:
+        width: 1/4
+        label: Status Color
+        type: color
+        options: 
+          type: query
+          query: kirby.option('salinapl.aag-rooms.colors')
+        when:
+          pgcolor: true
+      emptyfont:
+        width: 1/4
+        type: gap
+        when:
+          pgcolor: true
+      aagprimaryfont:
+        width: 1/4
+        label: Primary Font Color
+        type: color
+        options: 
+          type: query
+          query: kirby.option('salinapl.aag-rooms.colors')
+        when:
+          pgcolor: true
+      aagsecondaryfont:
+        width: 1/4
+        label: Secondary Font Color
+        type: color
+        options: 
+          type: query
+          query: kirby.option('salinapl.aag-rooms.colors')
+        when:
+          pgcolor: true
+      aagstatusfont:
+        width: 1/4
+        label: Status Font Color
+        type: color
+        options: 
+          type: query
+          query: kirby.option('salinapl.aag-rooms.colors')
+        when:
+          pgcolor: true
       pgtouch:
-        width: 1/2
-        label: Interactive Page Toggle
+        width: 1/4
+        label: Reservation Mode Toggle
         type: toggle
         text:
-          - "non-interactive"
-          - "touch interactive"
+          - "QR Code"
+          - "Button"
       pgbutton:
-        width: 2/2
+        width: 3/4
         label: Reservation link (QR/Button)
         type: url
       description:

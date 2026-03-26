@@ -6,10 +6,10 @@
 }
 html, body, .headline, .flex-horz-wrapper, .main, .description, .sidebar, 
 .timeline-wrapper, .time {
-    display:flex;
+    display: flex;
 }
 html, body { 
-    height:100%; 
+    height: 100%; 
     background-color: var(--dark-grey);
     flex-direction: column;
     align-items: center;
@@ -18,16 +18,13 @@ html, body {
 body {
     background-color: var(--white);
     width: 100%;
-    min-width:480px;
+    min-width: 480px;
     min-height: 360px;
     padding-bottom: 0.5rem;
     align-items: flex-start;
 }
 h1 {
     margin-bottom: 0;
-}
-.font-headline, .font-large, .font-medium, .font-small {
-    font-smooth: never;
 }
 .font-headline {
     color: var(--black);
@@ -48,18 +45,19 @@ h1 {
 }
 .headline {
     flex-direction: row;
-    width:100%;
+    width: 100%;
     justify-content: space-between;
     padding: 0 0.5rem;
 }
 .flex-horz-wrapper {
     flex-direction: row;
-    width:100%;
-    height:100%;
+    width: 100%;
+    height: 100%;
     align-items: flex-start;
+    margin-top: 0.5rem
 }
 .main {
-    max-width:66.6%;
+    max-width: 66.6%;
     height: 100%;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -71,12 +69,12 @@ h1 {
 }
 .notice{
     text-align: center;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0;
     padding: 0.5rem;
-    width:100%;
+    width: 100%;
 }
 .description {
-    height:100%;
+    height: 100%;
     align-items: center;
     justify-content: center;
     flex-direction: center;
@@ -85,12 +83,12 @@ h1 {
     padding: 0.5rem;
 }
 ul.schedule {
-    padding:0;
-    margin:5px;
-    width:100%;
+    padding: 0;
+    margin: 5px;
+    width: 100%;
     list-style: none;
     flex: 1 auto;
-    height:360px;
+    height: 360px;
 }
 .schedule > li {
     padding: 5px;
@@ -109,7 +107,7 @@ ul.schedule {
     flex-direction: column;
     justify-content: space-evenly;
     padding: 0 0.5rem;
-    height:100%;
+    height: 100%;
     container-name: sidebar;
     container-type: inline-size;
 }
@@ -124,7 +122,7 @@ ul.schedule {
     border: #000 3px solid;
 }
 .aag-qr {
-    display:block;
+    display: block;
     width: 100%;
     text-align: center;
 }
@@ -137,7 +135,7 @@ ul.schedule {
 }
 .timeline-wrapper {
     flex-direction: column;
-    height:100%;
+    height: 100%;
 }
 .timeline {
     display: grid;
@@ -162,6 +160,7 @@ ul.schedule {
     margin-right: 0.5rem;
 }
 .event {
+    border-radius: 5px;
     padding: 0.5rem;
     grid-row: var(--start) / var(--end);
     overflow: hidden;
@@ -169,7 +168,7 @@ ul.schedule {
 .event-footer {
     bottom: 0px;
     min-height: 0;
-    margin: 0.5rem;
+    margin: 0.5rem 0 0 0.5rem;
     padding: 0.5rem;
 }
 @container sidebar (width > 500px) {
@@ -199,5 +198,8 @@ ul.schedule {
     .event-footer {
         padding: 1rem;
         margin-left: 2rem;
+    }
+    .sidebar {
+        padding: 0 2rem 0 0.5rem;
     }
 }

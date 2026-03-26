@@ -18,6 +18,16 @@ Kirby::plugin('salinapl/aag-rooms', [
         'header-rooms' => __DIR__ . '/snippets/header-rooms.php',
         'schedule' => __DIR__ . '/snippets/schedule.php',
         'timeline' => __DIR__ . '/snippets/timeline.php'
+    ],
+    'options' => [
+        'colors' => [
+            '#00bef2' => 'SPL Cyan',
+            '#004d71' => 'SPL Dark Blue',
+            '#ffc46c' => 'SPL Tan',
+            '#2e2926' => 'SPL Black',
+            '#fafafa' => 'SPL Light Gray',
+            '#dad5d2' => 'SPL Inverted Light Gray',
+        ]
     ]
         // plugin magic happens here
 ]);

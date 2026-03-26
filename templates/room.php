@@ -8,7 +8,16 @@
             : css('/media/plugins/salinapl/aag-rooms/css/template/2bit.css');
         ?>
         <style>
-
+            <?php if($page->pgcolor()->bool()):?>
+            :root{
+                --primary:<?= $page->aagprimary() ?>;
+                --secondary:<?= $page->aagsecondary() ?>;
+                --status:<?= $page->aagstatus() ?>;
+                --fontprimary:<?= $page->aagprimaryfont() ?>;
+                --fontsecondary:<?= $page->aagsecondaryfont() ?>;
+                --fontstatus:<?= $page->aagstatusfont() ?>;
+            }
+            <?php endif ?>
         </style>
     </head>
     <body class="font-small">
