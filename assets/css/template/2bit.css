@@ -6,6 +6,9 @@
 }
 .event, .notice, .description p {
     background-color: var(--light-grey);
+    -webkit-text-stroke: var(--white);
+    -webkit-text-stroke-width: 7px;
+    paint-order: stroke fill;
 }
 .events-column .event:first-child {
     background-color: var(--white);
