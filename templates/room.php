@@ -16,6 +16,8 @@
                 --fontprimary:<?= $page->aagprimaryfont() ?>;
                 --fontsecondary:<?= $page->aagsecondaryfont() ?>;
                 --fontstatus:<?= $page->aagstatusfont() ?>;
+                --buttonbg:<?= $page->aagbuttonbg() ?>;
+                --fontbutton:<?= $page->aagbuttonfont() ?>;
             }
             <?php endif ?>
         </style>

@@ -43,3 +43,8 @@
     border-radius: 0px;
     box-sizing: border-box;
 }
+.aag-button {
+    color: var(--fontbutton);
+    background-color: var(--buttonbg);
+    border: none;
+}

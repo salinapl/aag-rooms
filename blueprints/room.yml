@@ -42,16 +42,11 @@ columns:
     fields:
       pgcolor:
         width: 1/4
-        label: Page Style Monochrome / Color
+        label: Page Style 4 Shade Black & White / Color
         type: toggle
         text:
-          - "monochrome"
+          - "4 Shade Black & White"
           - "color"
-      emptycolor:
-        width: 3/4
-        type: gap
-        when:
-          pgcolor: false
       aagprimary:
         width: 1/4
         label: Primary Color
@@ -79,7 +74,7 @@ columns:
           query: kirby.option('salinapl.aag-rooms.colors')
         when:
           pgcolor: true
-      emptyfont:
+      emptycolor:
         width: 1/4
         type: gap
         when:
@@ -122,6 +117,31 @@ columns:
         width: 3/4
         label: Reservation link (QR/Button)
         type: url
+      pgbutton:
+        label: 
+        type: info
+        text: |
+          Button Color only applies when set to color mode.
+        when:
+          pgtouch: true
+      aagbuttonfont:
+        width: 1/2
+        label: Button Font Color
+        type: color
+        options: 
+          type: query
+          query: kirby.option('salinapl.aag-rooms.colors')
+        when:
+          pgtouch: true
+      aagbuttonbg:
+        width: 1/2
+        label: Button Color
+        type: color
+        options: 
+          type: query
+          query: kirby.option('salinapl.aag-rooms.colors')
+        when:
+          pgtouch: true
       description:
         width: 2/2
         label: Room Description
