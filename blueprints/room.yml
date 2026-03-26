@@ -47,6 +47,11 @@ columns:
         text:
           - "4 Shade Black & White"
           - "color"
+      emptycolortoggle:
+        width: 3/4
+        type: gap
+        when:
+          pgcolor: false
       aagprimary:
         width: 1/4
         label: Primary Color
@@ -117,7 +122,7 @@ columns:
         width: 3/4
         label: Reservation link (QR/Button)
         type: url
-      pgbutton:
+      pgbuttoninfo:
         label: 
         type: info
         text: |
