@@ -2,13 +2,19 @@
         <?= css('/media/plugins/salinapl/aag-rooms/fonts/prompt-master/css/fonts.css') ?>
         <?= css('/media/plugins/salinapl/aag-rooms/fonts/Merriweather-Sans-master/fonts.css') ?>
         <?= css('/media/plugins/salinapl/aag-rooms/css/template/room.css') ?>
-        <?= 
-            $page->pgcolor()->bool()
-            ? css('/media/plugins/salinapl/aag-rooms/css/template/color.css')
-            : css('/media/plugins/salinapl/aag-rooms/css/template/2bit.css');
+        <?php
+            $colorStyles =[
+                //'1bit'  => '/media/plugins/salinapl/aag-rooms/css/template/1bit.css',
+                '2bit'  => '/media/plugins/salinapl/aag-rooms/css/template/2bit.css',
+                'color' => '/media/plugins/salinapl/aag-rooms/css/template/color.css'
+            ];
+            // Checks the panel for the selected css, 
+            // if none is set, pick first value in array
+            $aagcss = $colorStyles[$page->pgcolor()->value()] ?? reset($colorStyles);
         ?>
+        <?= css($aagcss) ?>
         <style>
-            <?php if($page->pgcolor()->bool()):?>
+            <?php if($page->pgcolor()->value() === 'color'):?>
             :root{
                 --primary:<?= $page->aagprimary() ?>;
                 --secondary:<?= $page->aagsecondary() ?>;
@@ -24,18 +30,14 @@
     </head>
     <body class="font-small">
         <?php 
-            $roomSign = $roomStatus 
-                ? "Available"
-                : "Occupied";
-            $roomSignclr = $roomStatus
-                ? "--available"
-                : "--occupied";
+            // Check roomStatus and set text
+            $roomState = $roomStatus ? "Available" : "Occupied";
         ?>
-        <div class="headline" style="background-color: var(<?= $roomSignclr ?>);">
+        <div class="headline" style="background-color: var(<?= "--" . strtolower($roomState); ?>);">
             <h1 class="font-headline"><?= $page->title() ?></h1>
             <span class="font-headline">-</span>
             <div class="room-status font-headline">
-                <?= $roomSign ?>
+                <?= $roomState ?>
             </div>
         </div>
         <?php if($page->noticetoggle()->bool()): ?>

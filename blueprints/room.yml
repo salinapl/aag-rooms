@@ -42,78 +42,80 @@ columns:
     fields:
       pgcolor:
         width: 1/4
-        label: Page Style 4 Shade Black & White / Color
-        type: toggle
-        text:
-          - "4 Shade Black & White"
-          - "color"
-      emptycolortoggle:
+        label: Page Style Colors
+        type: select
+        default: 2bit
+        required: true
+        options:
+          1bit: 1-Bit Black & White
+          2bit: 2-Bit 4 Grays
+          color: Full Color
+      emptycolor1bit:
         width: 3/4
         type: gap
         when:
-          pgcolor: false
+          pgcolor: 1bit
+      emptycolor2bit:
+        width: 3/4
+        type: gap
+        when:
+          pgcolor: 2bit
       aagprimary:
         width: 1/4
         label: Primary Color
         type: color
-        options: 
-          type: query
-          query: kirby.option('salinapl.aag-rooms.colors')
+        required: true
+        default: "#00bef2"
         when:
-          pgcolor: true
+          pgcolor: color
       aagsecondary:
         width: 1/4
         label: Secondary Color
         type: color
-        options: 
-          type: query
-          query: kirby.option('salinapl.aag-rooms.colors')
+        required: true
+        default: "#004d71"
         when:
-          pgcolor: true
+          pgcolor: color
       aagstatus:
         width: 1/4
         label: Status Color
         type: color
-        options: 
-          type: query
-          query: kirby.option('salinapl.aag-rooms.colors')
+        required: true
+        default: "#ffc46c"
         when:
-          pgcolor: true
+          pgcolor: color
       emptycolor:
         width: 1/4
         type: gap
         when:
-          pgcolor: true
+          pgcolor: color
       aagprimaryfont:
         width: 1/4
         label: Primary Font Color
         type: color
-        options: 
-          type: query
-          query: kirby.option('salinapl.aag-rooms.colors')
+        required: true
+        default: "#2e2926"
         when:
-          pgcolor: true
+          pgcolor: color
       aagsecondaryfont:
         width: 1/4
         label: Secondary Font Color
         type: color
-        options: 
-          type: query
-          query: kirby.option('salinapl.aag-rooms.colors')
+        required: true
+        default: "#fafafa"
         when:
-          pgcolor: true
+          pgcolor: color
       aagstatusfont:
         width: 1/4
         label: Status Font Color
         type: color
-        options: 
-          type: query
-          query: kirby.option('salinapl.aag-rooms.colors')
+        required: true
+        default: "#2e2926"
         when:
-          pgcolor: true
+          pgcolor: color
       pgtouch:
         width: 1/4
-        label: Reservation Mode Toggle
+        label: Reservation Mode Toggle (QR/Button)
         type: toggle
         text:
           - "QR Code"
@@ -126,25 +128,23 @@ columns:
         label: 
         type: info
         text: |
-          Button Color only applies when set to color mode.
+          Button Color only applies when set to Full Color mode.
         when:
           pgtouch: true
       aagbuttonfont:
         width: 1/2
         label: Button Font Color
         type: color
-        options: 
-          type: query
-          query: kirby.option('salinapl.aag-rooms.colors')
+        required: true
+        default: "#2e2926"
         when:
           pgtouch: true
       aagbuttonbg:
         width: 1/2
         label: Button Color
         type: color
-        options: 
-          type: query
-          query: kirby.option('salinapl.aag-rooms.colors')
+        required: true
+        default: "#00bef2"
         when:
           pgtouch: true
       description:
