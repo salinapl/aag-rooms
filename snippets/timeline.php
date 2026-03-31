@@ -66,6 +66,9 @@
                     // Check if event underflows
                     $isUnderflow = ($start < $timelineStart);
 
+                    // Check if event is short
+                    $isShort = (($endRow - $startRow) <= 1) || ($startRow >= 11);
+
                     // Assemble css classes
                     $classes = ['event'];
                     if ($isUnderflow) {
@@ -73,6 +76,9 @@
                     }
                     if ($isOverflow) {
                         $classes[] = 'overflow';
+                    }
+                    if ($isShort) {
+                        $classes[] = 'short';
                     }
                     $classAttr = implode(' ', $classes);
 
