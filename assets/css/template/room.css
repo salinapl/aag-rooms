@@ -147,6 +147,7 @@ ul.schedule {
 .time-labels,
 .events-column {
     display: grid;
+    row-gap: 0.5rem;
     grid-template-rows: repeat(11, 1fr); /* 1-11 odds is every half hour */
 }
 .time-labels {
