@@ -162,7 +162,6 @@ ul.schedule {
     margin-right: 0.5rem;
 }
 .event {
-    margin: 0.5rem 0;
     border-radius: 5px;
     padding: 0.5rem 0.5rem 0 0.5rem;
     grid-row: var(--start) / var(--end);
