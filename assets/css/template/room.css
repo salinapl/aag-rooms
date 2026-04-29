@@ -208,4 +208,7 @@ ul.schedule {
     .sidebar {
         padding: 0 2rem 0 0.5rem;
     }
+    .event {
+    border-radius: 12px;
+    }
 }

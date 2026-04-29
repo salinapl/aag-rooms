@@ -68,3 +68,61 @@
     border-image-repeat: repeat;
     box-sizing: border-box;
 }
+
+@media only screen and (min-width: 1281px) {
+    .underflow {
+        padding-top: 24px;
+        border-image: url('/media/plugins/salinapl/aag-rooms/img/border-mask04.svg');
+        border-image-width: 24px 0 0 0;
+        border-image-slice: 8;
+        border-image-repeat: repeat;
+        border-radius: 0 0 5px 5px;
+        box-sizing: border-box;
+    }
+    .overflow {
+        border-image: url('/media/plugins/salinapl/aag-rooms/img/border-mask04.svg');
+        border-image-width: 0 0 24px 0;
+        border-image-slice: 8;
+        border-image-repeat: repeat;
+        border-radius: 5px 5px 0 0;
+        box-sizing: border-box;
+    }
+    .underflow.overflow {
+        padding: 24px 0 0 24px;
+        border-image: url('/media/plugins/salinapl/aag-rooms/img/border-mask04.svg');
+        border-image-width: 24px 0 24px 0;
+        border-image-slice: 8;
+        border-image-repeat: repeat;
+        border-radius: 0px;
+        box-sizing: border-box;
+    }
+    .events-column .event:first-of-type{
+        border-image: url('/media/plugins/salinapl/aag-rooms/img/border-smooth01.svg');
+        border-image-width: 24px;
+        border-image-slice: 8;
+        box-sizing: border-box;
+    }
+    .events-column .event:first-of-type.underflow{
+        padding: 24px 0 0 24px;
+        border-image: url('/media/plugins/salinapl/aag-rooms/img/border-smooth02.svg');
+        border-image-width: 24px;
+        border-image-slice: 8;
+        border-image-repeat: repeat;
+        box-sizing: border-box;
+    }
+    .events-column .event:first-of-type.overflow{
+        border-image: url('/media/plugins/salinapl/aag-rooms/img/border-smooth03.svg');
+        border-image-width: 24px;
+        border-image-slice: 8;
+        border-image-repeat: repeat;
+        box-sizing: border-box;
+    }
+    .events-column .event:first-of-type.underflow.overflow {
+        padding: 24px 0 0 24px;
+        border-image: url('/media/plugins/salinapl/aag-rooms/img/border-smooth04.svg');
+        border-image-width: 24px;
+        border-image-slice: 8;
+        border-image-repeat: repeat;
+        box-sizing: border-box;
+    }
+}
