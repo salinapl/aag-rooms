@@ -71,8 +71,8 @@
                     </p>
                 <?php else: ?>
                     <div class ="aag-qr">
-                        <p>Scan QR Code to reserve room:</p>
-                        <?= qr($page->pgbutton()->url())->toSvg(130, '#000', '#fff', 1) ?>
+                        <p><?= $page->qrdescription()->kirbytext() ?></p>
+                        <?= qr($page->pgbutton()->url())->toSvg(350, '#000', '#fff', 1) ?>
                     </div>
                 <?php endif ?>
             </div>

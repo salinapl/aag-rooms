@@ -120,6 +120,12 @@ columns:
         text:
           - "QR Code"
           - "Button"
+      qrdescription:
+        width: 2/2
+        label: QR Lead Text
+        type: textarea
+        when:
+          pgtouch: false
       pgbutton:
         width: 3/4
         label: Reservation link (QR/Button)
