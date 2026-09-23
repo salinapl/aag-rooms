@@ -35,6 +35,43 @@ columns:
           parent: kirby.page("rooms")
           template:
             - room
+      fieldset:
+        type: fields
+        fields:
+          timezoneOptions:
+            label: Timezone
+            type: select
+            default: America/Chicago
+            options:
+              Pacific/Midway: (GMT-11:00) Midway
+              Pacific/Honolulu: (GMT-10:00) Hawaii
+              America/Anchorage: (GMT-09:00) Alaska
+              America/Los_Angeles: (GMT-08:00) Pacific Time (US & Canada)
+              America/Denver: (GMT-07:00) Mountain Time (US & Canada)
+              America/Chicago: (GMT-06:00) Central Time (US & Canada)
+              America/New_York: (GMT-05:00) Eastern Time (US & Canada)
+              America/Halifax: (GMT-04:00) Atlantic Time (Canada)
+              America/Buenos_Aires: (GMT-03:00) Buenos Aires
+              Atlantic/South_Georgia: (GMT-02:00) South Georgia
+              Atlantic/Cape_Verde: (GMT-01:00) Cape Verde
+              UTC: (GMT+00:00) Default
+              Europe/Dublin: (GMT+01:00) Dublin
+              Europe/Amsterdam: (GMT+02:00) Amsterdam
+              Asia/Baghdad: (GMT+03:00) Baghdad
+              Asia/Baku: (GMT+04:00) Baku
+              Indian/Maldives: (GMT+05:00) Maldives
+              Asia/Dhaka: (GMT+06:00) Dhaka
+              Asia/Bangkok: (GMT+07:00) Bangkok
+              Asia/Hong_Kong: (GMT+08:00) Hong Kong
+              Asia/Tokyo: (GMT+09:00) Tokyo
+              Pacific/Saipan: (GMT+10:00) Saipan
+              Australia/Melbourne: (GMT+11:00) Melbourne
+              Pacific/Majuro: (GMT+12:00) Majuro
+              Pacific/Fakaofo: (GMT+13:00) Fakaofo
+              Pacific/Apia: (GMT+14:00) Apia
+            required: true
+            
+
   config:
     width: 1/1
     fields:
