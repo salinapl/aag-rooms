@@ -3,7 +3,8 @@
 return function($page) {
     // Set the default timezone 
     // TODO - make this a variable set in the interface
-    date_default_timezone_set('America/Chicago');    
+    $timezone = $page->parent()->timezoneConfig();
+    date_default_timezone_set($timezone);    
 
     // Pull in the rest of the page configs
     if ($page->orauthurltoggle()->bool() == true) {

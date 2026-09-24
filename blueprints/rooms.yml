@@ -38,7 +38,7 @@ columns:
       fieldset:
         type: fields
         fields:
-          timezoneOptions:
+          timezoneConfig:
             label: Timezone
             type: select
             default: America/Chicago
@@ -70,7 +70,6 @@ columns:
               Pacific/Fakaofo: (GMT+13:00) Fakaofo
               Pacific/Apia: (GMT+14:00) Apia
             required: true
-            
 
   config:
     width: 1/1
