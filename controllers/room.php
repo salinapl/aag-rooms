@@ -2,7 +2,6 @@
 
 return function($page) {
     // Set the default timezone 
-    // TODO - make this a variable set in the interface
     $timezone = $page->parent()->timezoneConfig();
     date_default_timezone_set($timezone);    
 
