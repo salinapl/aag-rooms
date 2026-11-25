@@ -72,7 +72,7 @@
                 <?php else: ?>
                     <div class ="aag-qr">
                         <p><?= $page->qrdescription()->kirbytext() ?></p>
-                        <?= qr($page->pgbutton()->url())->toSvg(350, '#000', '#fff', 1) ?>
+                        <?= qr($page->pgbutton()->toUrl())->toSvg(350, '#000', '#fff', 1) ?>
                     </div>
                 <?php endif ?>
             </div>
